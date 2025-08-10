@@ -34,12 +34,12 @@ export function RegisterPage() {
       });
 
       setSuccess(true);
-    } catch (error: any) {
-      console.log(error);
-
-      setError("Erro ao registrar usuário!");
-
-      setSuccess(false);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Um erro desconhecido aconteceu!");
+      }
     } finally {
       setLoading(false);
     }
@@ -49,10 +49,12 @@ export function RegisterPage() {
         await auth.login(email, password);
 
         navigate("/");
-      } catch (error: any) {
-        console.log(error);
-
-        setError("Erro ao fazer login após registro!");
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError("Um erro desconhecido aconteceu!");
+        }
       }
     }
   }

@@ -24,8 +24,12 @@ export function ForgotPasswordPage() {
       await axios.post(`${API_URL}/forgot-password`, { email });
 
       setMessage("Verifique seu e-mail para o link de redefinição.");
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Um erro desconhecido aconteceu!");
+      }
     } finally {
       setLoading(false);
     }

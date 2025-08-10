@@ -42,8 +42,12 @@ export function ResetPasswordPage() {
       setTimeout(() => {
         navigate("/login");
       }, 3000);
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Um erro desconhecido aconteceu!");
+      }
     } finally {
       setLoading(false);
     }
