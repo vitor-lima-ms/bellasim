@@ -10,6 +10,6 @@ export const create = async (req: Request, res: Response) => {
 
     res.status(201).json({ baleBag });
   } catch (error: any) {
-    res.status(500).json({message: error.message})
+    res.status(500).json({ message: error.message });
   }
 };
