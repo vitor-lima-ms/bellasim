@@ -24,7 +24,7 @@ export const register = async (req: Request, res: Response) => {
 
     res.status(201).json({ userWithoutPass });
   } catch (error: any) {
-    res.status(400).json({ Erro: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -49,7 +49,7 @@ export const login = async (req: Request, res: Response) => {
 
     res.json({ user: userWithoutPass });
   } catch (error: any) {
-    res.status(401).json({ Erro: error.message });
+    res.status(401).json({ message: error.message });
   }
 };
 
@@ -77,7 +77,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
         "Se um e-mail correspondente for encontrado, um link de recuperação será enviado!",
     });
   } catch (error: any) {
-    res.status(400).json({ Erro: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -95,6 +95,6 @@ export const resetPassword = async (req: Request, res: Response) => {
 
     res.status(200).json(result);
   } catch (error: any) {
-    res.status(400).json({ Erro: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
