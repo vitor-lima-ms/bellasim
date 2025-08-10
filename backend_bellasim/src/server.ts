@@ -34,6 +34,7 @@ import commissionRoutes from "./routes/commissionRoutes";
 import taxRoutes from "./routes/taxRoutes";
 import freightRoutes from "./routes/freightRoutes";
 import contributionMarginRoutes from "./routes/contributionMarginRoutes";
+import stRoutes from "./routes/stRoutes";
 
 app.use("/api/auth", authRoutes);
 app.use("/api/bale-bag", baleBagRoutes);
@@ -42,6 +43,7 @@ app.use("/api/commission", commissionRoutes);
 app.use("/api/tax", taxRoutes);
 app.use("/api/freight", freightRoutes);
 app.use("/api/contribution-margin", contributionMarginRoutes);
+app.use("/api/st", stRoutes);
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`Servidor rodando na porta ${port}`);
