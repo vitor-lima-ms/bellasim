@@ -22,7 +22,7 @@ export const register = async (req: Request, res: Response) => {
       email: user.email,
     };
 
-    res.status(201).json(userWithoutPass);
+    res.status(201).json({ userWithoutPass });
   } catch (error: any) {
     res.status(400).json({ Erro: error.message });
   }
