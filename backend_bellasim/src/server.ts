@@ -31,11 +31,13 @@ import authRoutes from "./routes/authRoutes";
 import packagingRoutes from "./routes/packagingRoutes";
 import baleBagRoutes from "./routes/baleBagRoutes";
 import commissionRoutes from "./routes/commissionRoutes";
+import taxRoutes from "./routes/taxRoutes";
 
 app.use("/api/auth", authRoutes);
 app.use("/api/bale-bag", baleBagRoutes);
 app.use("/api/packaging", packagingRoutes);
 app.use("/api/commission", commissionRoutes);
+app.use("/api/tax", taxRoutes);
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`Servidor rodando na porta ${port}`);
