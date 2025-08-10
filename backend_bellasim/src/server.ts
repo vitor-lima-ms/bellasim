@@ -28,12 +28,14 @@ app.get("/api/health", (req, res) => {
 
 // Usando as rotas que definimos
 import authRoutes from "./routes/authRoutes";
-import baleBagRoutes from "./routes/baleBagRoutes";
 import packagingRoutes from "./routes/packagingRoutes";
+import baleBagRoutes from "./routes/baleBagRoutes";
+import commissionRoutes from "./routes/commissionRoutes";
 
 app.use("/api/auth", authRoutes);
 app.use("/api/bale-bag", baleBagRoutes);
 app.use("/api/packaging", packagingRoutes);
+app.use("/api/commission", commissionRoutes);
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`Servidor rodando na porta ${port}`);
