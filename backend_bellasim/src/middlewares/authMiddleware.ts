@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { JwtPayload } from "../types/jwt";
 
-export const authMiddleware = (
+const authMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction
@@ -23,3 +23,5 @@ export const authMiddleware = (
     }
   }
 };
+
+export default authMiddleware
