@@ -1,0 +1,95 @@
+// Define o cliente que será gerado (TypeScript)
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Define a fonte de dados (nosso banco de dados)
+datasource db {
+  provider = "postgresql"
+  // A URL é lida do arquivo .env
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                   Int       @id @default(autoincrement())
+  email                String    @unique
+  name                 String
+  password             String
+  role                 String    @default("user")
+  passwordResetToken   String?   @unique
+  passwordResetExpires DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+}
+
+model Company {
+  id              Int      @id @default(autoincrement())
+  corporateReason String
+  cnpj            String   @unique
+  address         String
+  mainContact     String
+  email           String
+  phone           String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Laboratory {
+  id              Int    @id @default(autoincrement())
+  corporateReason String
+  cnpj            String @unique
+  address         String
+  mainContact     String
+}
+
+model Campaign {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  startDate DateTime
+  endDate   DateTime
+  status    String   @default("active")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  samples   Sample[]
+}
+
+model Sample {
+  id                  Int      @id @default(autoincrement())
+  name                String
+  samplingDate        DateTime
+  samplingResponsible String
+  coordX              String
+  coordY              String
+  coordZ              String
+  generatingProcess   String
+  physicalDescription String
+  packagingType       String
+  knownHazardInfo     String
+  parameters          Json
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  campaignId          Int
+  campaign            Campaign @relation(fields: [campaignId], references: [id])
+}
+
+model GenericParameter {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  minValue  String?
+  maxValue  String?
+  unit      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model LSCTParameter {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  minValue  String?
+  maxValue  String?
+  unit      String
+  code      String
+  mFactor   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
