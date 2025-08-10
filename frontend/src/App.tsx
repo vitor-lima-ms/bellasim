@@ -1,14 +1,19 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
-import { Routes, Route } from "react-router-dom";
-import { Container, Nav, Navbar } from "react-bootstrap";
+
 import { ProtectedRoute } from "./components/ProtectedRoute";
+
+import { Routes, Route } from "react-router-dom";
+
+import { Container, Nav, Navbar } from "react-bootstrap";
 
 import { LoginPage } from "./pages/auth/LoginPage";
 import { RegisterPage } from "./pages/auth/RegisterPage";
 import { LogoutPage } from "./pages/auth/LogoutPage";
 import { ForgotPasswordPage } from "./pages/auth/ForgotPasswordPage";
 import { ResetPasswordPage } from "./pages/auth/ResetPasswordPage";
+
+import { CreationConstantParameterFormPage } from "./pages/constantParameters/CreationConstantParameterFormPage";
 
 function AppContent() {
   const auth = useAuth();
@@ -54,6 +59,14 @@ function AppContent() {
         />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+        <Route
+          path="/constant-parameters"
+          element={
+            <ProtectedRoute>
+              <CreationConstantParameterFormPage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </div>
   );
