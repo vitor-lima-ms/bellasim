@@ -22,9 +22,11 @@ model User {
   updatedAt            DateTime  @updatedAt
 }
 
-model Cost {
-  id          Int    @id @default(autoincrement())
-  rawMaterial String
-  unit        String
-  unitCost    String
+model RawMaterial {
+  id        Int      @id @default(autoincrement())
+  name      String
+  unit      String
+  unitCost  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
