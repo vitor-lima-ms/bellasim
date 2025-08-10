@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
 import * as authService from "../services/authService";
 
+export const status = async (req: Request, res: Response) => {
+  res.status(200).json({ message: "Usuário autenticado!" });
+};
+
 export const register = async (req: Request, res: Response) => {
   const name = req.body.name;
   const email = req.body.email;
@@ -51,10 +55,6 @@ export const login = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(401).json({ message: error.message });
   }
-};
-
-export const status = async (req: Request, res: Response) => {
-  res.status(200).json({ message: "Usuário autenticado!" });
 };
 
 export const logout = (req: Request, res: Response) => {
