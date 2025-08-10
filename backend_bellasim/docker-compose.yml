@@ -15,10 +15,12 @@ services:
       start_period: 30s
 
   postgres-db:
-    image: postgres:16
+    image: postgres:14
     restart: always
     env_file:
       - .env
+    ports:
+      - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
     healthcheck:
