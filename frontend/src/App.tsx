@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { Routes, Route } from "react-router-dom";
-import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Container, Nav, Navbar } from "react-bootstrap";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 import { LoginPage } from "./pages/auth/LoginPage";
@@ -22,15 +22,9 @@ function AppContent() {
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
-                  <Nav.Link href="/campaign">Campanhas</Nav.Link>
-                  <NavDropdown title="Biblioteca de parâmetros">
-                    <NavDropdown.Item href="/generic-parameters">
-                      Parâmetros genéricos
-                    </NavDropdown.Item>
-                    <NavDropdown.Item href="/lsct-parameters">
-                      LSCT
-                    </NavDropdown.Item>
-                  </NavDropdown>
+                  <Nav.Link href="/constant-parameters">
+                    Parâmetros constantes
+                  </Nav.Link>
                   <Nav.Link href="/register">Registrar</Nav.Link>
                   <Nav.Link href="/logout">Sair</Nav.Link>
                 </Nav>
