@@ -6,4 +6,6 @@ const router = Router();
 
 router.post("/create", authMiddleware, commissionController.create);
 
+router.get("/read", authMiddleware, commissionController.read);
+
 export default router;

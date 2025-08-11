@@ -12,3 +12,9 @@ export const create = async (description: string, percent: string) => {
 
   return commission;
 };
+
+export const read = async () => {
+  const commissions = await prisma.commission.findMany();
+
+  return commissions;
+};
