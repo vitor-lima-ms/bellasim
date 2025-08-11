@@ -2,6 +2,10 @@ body {
   background-color: #0d2c54;
 }
 
+.text-muted {
+  color: #f0f0f075 !important;
+}
+
 .card {
   background-color: #0a2240;
   border: 1px solid #1a4a8a;
