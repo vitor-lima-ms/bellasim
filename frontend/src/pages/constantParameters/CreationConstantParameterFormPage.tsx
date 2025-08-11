@@ -334,12 +334,6 @@ export function CreationConstantParameterFormPage() {
               </tbody>
             </Table>
           )}
-
-          {parametersList.length === 0 && !listParametersError && (
-            <Alert variant="info" className="mt-4 text-center">
-              Nenhum parâmetro encontrado para o tipo selecionado.
-            </Alert>
-          )}
         </Card.Body>
       </Card>
     </Container>
