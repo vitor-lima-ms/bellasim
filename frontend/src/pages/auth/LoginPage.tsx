@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Form, Row, Alert } from "react-bootstrap";
 
 export function LoginPage() {
   const [email, setEmail] = useState("");
@@ -26,53 +26,51 @@ export function LoginPage() {
   }
 
   return (
-    <Container>
-      <Row>
-        <Col className="col-md-6 offset-md-3 mt-3 text-center">
-          <h1>Login</h1>
-        </Col>
-      </Row>
+    <Container className="mt-5">
       <Row>
         <Col className="col-md-6 offset-md-3">
-          {error && (
-            <div className="alert alert-danger" role="alert">
-              {error}
-            </div>
-          )}
-        </Col>
-      </Row>
-      <Row>
-        <Col className="col-md-6 offset-md-3">
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                required
-              />
-            </Form.Group>
+          <Card>
+            <Card.Header as="h3" className="text-center">
+              Login
+            </Card.Header>
+            <Card.Body>
+              {error && (
+                <Alert variant="danger">
+                  {error}
+                </Alert>
+              )}
+              <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    required
+                  />
+                </Form.Group>
 
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Senha</Form.Label>
-              <Form.Control
-                type="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                required
-              />
-            </Form.Group>
+                <Form.Group className="mb-4" controlId="formBasicPassword">
+                  <Form.Label>Senha</Form.Label>
+                  <Form.Control
+                    type="password"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                    required
+                  />
+                </Form.Group>
 
-            <Button className="mt-2" variant="primary" type="submit">
-              Entrar
-            </Button>
-          </Form>
-        </Col>
-      </Row>
-      <Row>
-        <Col className="col-md-6 offset-md-3 mt-2 text-center">
-          <Link to={"/forgot-password"}>Esqueci minha senha.</Link>
+                <div className="d-grid">
+                    <Button className="btn-custom-orange" variant="primary" type="submit">
+                        Entrar
+                    </Button>
+                </div>
+              </Form>
+              <div className="mt-3 text-center">
+                <Link to={"/forgot-password"} className="link-custom-orange">Esqueci minha senha.</Link>
+              </div>
+            </Card.Body>
+          </Card>
         </Col>
       </Row>
     </Container>

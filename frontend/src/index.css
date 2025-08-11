@@ -47,3 +47,13 @@ body {
   background-color: #e67e00;
   border-color: #cc7000;
 }
+
+.link-custom-orange {
+  color: #ff8c00;
+  text-decoration: none;
+}
+
+.link-custom-orange:hover {
+  color: #e67e00;
+  text-decoration: underline;
+}
