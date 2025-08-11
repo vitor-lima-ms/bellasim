@@ -12,3 +12,9 @@ export const create = async (description: string, cost: string) => {
 
   return baleBag;
 };
+
+export const read = async () => {
+  const baleBags = await prisma.baleBag.findMany();
+
+  return baleBags;
+};

@@ -6,4 +6,6 @@ const router = Router();
 
 router.post("/create", authMiddleware, baleBagController.create);
 
+router.get("/read", authMiddleware, baleBagController.read);
+
 export default router;
