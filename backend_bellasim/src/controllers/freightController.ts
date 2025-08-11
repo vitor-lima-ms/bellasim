@@ -13,3 +13,13 @@ export const create = async (req: Request, res: Response) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const read = async (req: Request, res: Response) => {
+  try {
+    const freights = await freightService.read();
+
+    res.status(200).json({ freights });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};

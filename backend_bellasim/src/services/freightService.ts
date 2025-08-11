@@ -12,3 +12,9 @@ export const create = async (description: string, percent: string) => {
 
   return freight;
 };
+
+export const read = async () => {
+  const freights = await prisma.freight.findMany();
+
+  return freights;
+};
