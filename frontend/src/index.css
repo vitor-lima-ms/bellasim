@@ -3,7 +3,7 @@ body {
 }
 
 .text-muted {
-  color: #f0f0f075 !important;
+  color: #a0a0a0 !important;
 }
 
 .card {
@@ -37,6 +37,7 @@ body {
 }
 
 .btn-custom-orange {
+  color: #0a2240;
   background-color: #ff8c00;
   border-color: #ff8c00;
   font-weight: bold;
