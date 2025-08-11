@@ -16,3 +16,13 @@ export const create = async (req: Request, res: Response) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const read = async (req: Request, res: Response) => {
+  try {
+    const contributionMargins = contributionMarginService.read();
+
+    res.status(200).json({ contributionMargins });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};

@@ -6,4 +6,6 @@ const router = Router();
 
 router.post("/create", authMiddleware, contributionMarginController.create);
 
+router.get("/read", authMiddleware, contributionMarginController.read);
+
 export default router;
