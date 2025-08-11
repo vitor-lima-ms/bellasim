@@ -18,11 +18,20 @@ import { CreationConstantParameterFormPage } from "./pages/constantParameters/Cr
 function AppContent() {
   const auth = useAuth();
 
+  const navbarBackgroundColor = "#e67e00";
+
   return (
     <div className="App">
       {auth.isAuthenticated && (
         <>
-          <Navbar bg="dark" variant="dark" expand="lg">
+          <Navbar
+            variant="light"
+            className="shadow-sm"
+            style={{
+              backgroundColor: navbarBackgroundColor,
+              fontWeight: "bold",
+            }}
+          >
             <Container fluid>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
