@@ -53,25 +53,46 @@ export function CreationConstantParameterFormPage() {
     try {
       switch (itemType) {
         case "packaging":
-          await apiClient.post(`${API_URL}/packaging/create`);
+          await apiClient.post(`${API_URL}/packaging/create`, {
+            description: description,
+            cost: value,
+          });
           break;
         case "baleBag":
-          await apiClient.post(`${API_URL}/bale-bag/create`);
+          await apiClient.post(`${API_URL}/bale-bag/create`, {
+            description: description,
+            cost: value,
+          });
           break;
         case "commission":
-          await apiClient.post(`${API_URL}/commission/create`);
+          await apiClient.post(`${API_URL}/commission/create`, {
+            description: description,
+            percent: value,
+          });
           break;
         case "tax":
-          await apiClient.post(`${API_URL}/tax/create`);
+          await apiClient.post(`${API_URL}/tax/create`, {
+            description: description,
+            percent: value,
+          });
           break;
         case "freight":
-          await apiClient.post(`${API_URL}/freight/create`);
+          await apiClient.post(`${API_URL}/freight/create`, {
+            description: description,
+            percent: value,
+          });
           break;
         case "contributionMargin":
-          await apiClient.post(`${API_URL}/contributionMargin/create`);
+          await apiClient.post(`${API_URL}/contributionMargin/create`, {
+            description: description,
+            percent: value,
+          });
           break;
         case "st":
-          await apiClient.post(`${API_URL}/st/create`);
+          await apiClient.post(`${API_URL}/st/create`, {
+            description: description,
+            percent: value,
+          });
           break;
         default:
           break;
@@ -98,6 +119,7 @@ export function CreationConstantParameterFormPage() {
               <Form.Label>Tipo de parâmetro</Form.Label>
               <Form.Select
                 value={itemType}
+                required
                 onChange={(event) => {
                   setItemType(event.target.value as keyof typeof configItems);
                 }}
@@ -116,6 +138,7 @@ export function CreationConstantParameterFormPage() {
                 type="text"
                 placeholder="Ex: Embalagem padrão"
                 value={description}
+                required
                 onChange={(event) => setDescription(event.target.value)}
               />
             </Form.Group>
@@ -125,9 +148,8 @@ export function CreationConstantParameterFormPage() {
               <Form.Control
                 type="number"
                 step="0.01"
-                placeholder={`Digite o valor de ${configItems[
-                  itemType
-                ].field.toLowerCase()}`}
+                min={0}
+                required
                 value={value}
                 onChange={(event) => setValue(event.target.value)}
               />
