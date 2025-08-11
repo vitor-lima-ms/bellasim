@@ -19,7 +19,7 @@ export const create = async (req: Request, res: Response) => {
 
 export const read = async (req: Request, res: Response) => {
   try {
-    const contributionMargins = contributionMarginService.read();
+    const contributionMargins = await contributionMarginService.read();
 
     res.status(200).json({ contributionMargins });
   } catch (error: any) {
