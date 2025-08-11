@@ -50,19 +50,20 @@ export function CreationConstantParameterFormPage() {
   const [parametersList, setParametersList] = useState<
     IItemsWithCost[] | IItemsWithPercent[]
   >([]);
-  const [success, setSuccess] = useState("");
-  const [error, setError] = useState("");
+  const [registerSuccess, setRegisterSuccess] = useState("");
+  const [registerError, setRegisterError] = useState("");
+  const [listParametersError, setListParametersError] = useState("");
 
   const handleRegisterSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     if (!description) {
-      setError("O campo de descrição é obrigatório! ");
+      setRegisterError("O campo de descrição é obrigatório! ");
       return;
     }
 
     if (!value) {
-      setError("O campo de valor é obrigatório! ");
+      setRegisterError("O campo de valor é obrigatório! ");
       return;
     }
 
@@ -99,7 +100,7 @@ export function CreationConstantParameterFormPage() {
           });
           break;
         case "contributionMargin":
-          await apiClient.post(`${API_URL}/contributionMargin/create`, {
+          await apiClient.post(`${API_URL}/contribution-margin/create`, {
             description: description,
             percent: value,
           });
@@ -114,12 +115,12 @@ export function CreationConstantParameterFormPage() {
           break;
       }
 
-      setSuccess("Parâmetro cadastrado com sucesso!");
+      setRegisterSuccess("Parâmetro cadastrado com sucesso!");
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setError(error.message);
+        setRegisterError(error.message);
       } else {
-        setError("Um erro desconhecido aconteceu!");
+        setRegisterError("Um erro desconhecido aconteceu!");
       }
     }
   };
@@ -138,37 +139,37 @@ export function CreationConstantParameterFormPage() {
 
           break;
         case "baleBag":
-          response = await apiClient.post(`${API_URL}/bale-bag/read`);
+          response = await apiClient.get(`${API_URL}/bale-bag/read`);
 
           setParametersList(response.data.baleBags);
 
           break;
         case "commission":
-          response = await apiClient.post(`${API_URL}/commission/read`);
+          response = await apiClient.get(`${API_URL}/commission/read`);
 
           setParametersList(response.data.commissions);
 
           break;
         case "tax":
-          response = await apiClient.post(`${API_URL}/tax/read`);
+          response = await apiClient.get(`${API_URL}/tax/read`);
 
           setParametersList(response.data.taxes);
 
           break;
         case "freight":
-          response = await apiClient.post(`${API_URL}/freight/read`);
+          response = await apiClient.get(`${API_URL}/freight/read`);
 
           setParametersList(response.data.freights);
 
           break;
         case "contributionMargin":
-          response = await apiClient.post(`${API_URL}/contributionMargin/read`);
+          response = await apiClient.get(`${API_URL}/contribution-margin/read`);
 
           setParametersList(response.data.contributionMargins);
 
           break;
         case "st":
-          response = await apiClient.post(`${API_URL}/st/read`);
+          response = await apiClient.get(`${API_URL}/st/read`);
 
           setParametersList(response.data.sts);
 
@@ -178,13 +179,13 @@ export function CreationConstantParameterFormPage() {
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
-        setError(error.message);
+        setListParametersError(error.message);
 
-        setParametersList([])
+        setParametersList([]);
       } else {
-        setError("Um erro desconhecido aconteceu!");
+        setListParametersError("Um erro desconhecido aconteceu!");
 
-        setParametersList([])
+        setParametersList([]);
       }
     }
   };
@@ -195,14 +196,14 @@ export function CreationConstantParameterFormPage() {
         <Card.Header as="h3" className="text-center">
           Cadastro de parâmetros
         </Card.Header>
-        {error && (
+        {registerError && (
           <Alert style={{ margin: "5px" }} variant="danger">
-            {error}
+            {registerError}
           </Alert>
         )}
-        {success && (
+        {registerSuccess && (
           <Alert style={{ margin: "5px" }} variant="success">
-            {success}
+            {registerSuccess}
           </Alert>
         )}
         <Card.Body>
@@ -264,14 +265,9 @@ export function CreationConstantParameterFormPage() {
         <Card.Header as="h3" className="text-center">
           Listagem de parâmetros
         </Card.Header>
-        {error && (
+        {listParametersError && (
           <Alert style={{ margin: "5px" }} variant="danger">
-            {error}
-          </Alert>
-        )}
-        {success && (
-          <Alert style={{ margin: "5px" }} variant="success">
-            {success}
+            {listParametersError}
           </Alert>
         )}
         <Card.Body>
