@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { Container, Card, Form, Button, Alert } from "react-bootstrap";
+import { Container, Card, Form, Button, Alert, Table } from "react-bootstrap";
 import axios, { type AxiosResponse } from "axios";
 
 const API_URL = "/api";
@@ -273,12 +273,16 @@ export function CreationConstantParameterFormPage() {
         <Card.Body>
           <Form onSubmit={handleListParametersSubmit}>
             <Form.Group className="mb-3" controlId="formItemType">
-              <Form.Label>Tipo de parâmetro</Form.Label>
+              <Form.Label>
+                Selecione o tipo de parâmetro a ser listado
+              </Form.Label>
               <Form.Select
                 value={itemType}
                 required
                 onChange={(event) => {
                   setItemType(event.target.value as keyof typeof configItems);
+
+                  setParametersList([]);
                 }}
               >
                 {Object.keys(configItems).map((key) => (
@@ -299,12 +303,42 @@ export function CreationConstantParameterFormPage() {
               </Button>
             </div>
           </Form>
-          {parametersList && (
-            <ul>
-              {parametersList.map((parameter) => (
-                <li key={parameter.id}>{parameter.description}</li>
-              ))}
-            </ul>
+          {parametersList.length > 0 && (
+            <Table striped bordered hover responsive className="mt-4">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Descrição</th>
+                  <th>{configItems[itemType].field}</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {parametersList.map((parameter) => (
+                  <tr key={parameter.id}>
+                    <td>{parameter.id}</td>
+                    <td>{parameter.description}</td>
+                    <td>
+                      {"cost" in parameter ? parameter.cost : parameter.percent}
+                    </td>
+                    <td>
+                      <Button variant="warning" size="sm">
+                        Editar
+                      </Button>{" "}
+                      <Button variant="danger" size="sm">
+                        Excluir
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          )}
+
+          {parametersList.length === 0 && !listParametersError && (
+            <Alert variant="info" className="mt-4 text-center">
+              Nenhum parâmetro encontrado para o tipo selecionado.
+            </Alert>
           )}
         </Card.Body>
       </Card>
