@@ -50,6 +50,7 @@ export function CreationConstantParameterFormPage() {
   const [parametersList, setParametersList] = useState<
     IItemsWithCost[] | IItemsWithPercent[]
   >([]);
+  const [searched, setSearched] = useState(false)
   const [registerSuccess, setRegisterSuccess] = useState("");
   const [registerError, setRegisterError] = useState("");
   const [listParametersError, setListParametersError] = useState("");
@@ -127,6 +128,8 @@ export function CreationConstantParameterFormPage() {
 
   const handleListParametersSubmit = async (event: FormEvent) => {
     event.preventDefault();
+
+    setSearched(true)
 
     let response: AxiosResponse;
 
@@ -282,7 +285,7 @@ export function CreationConstantParameterFormPage() {
                 onChange={(event) => {
                   setItemType(event.target.value as keyof typeof configItems);
 
-                  setParametersList([]);
+                  setSearched(false)
                 }}
               >
                 {Object.keys(configItems).map((key) => (
@@ -303,7 +306,11 @@ export function CreationConstantParameterFormPage() {
               </Button>
             </div>
           </Form>
-          {parametersList.length > 0 && (
+          {searched && parametersList.length === 0 ? (
+            <Alert style={{ margin: "15px" }} variant="danger">
+              Nenhum parâmetro encontrado!
+            </Alert>
+          ) : searched && parametersList.length > 0 && (
             <Table striped bordered hover responsive className="mt-4">
               <thead>
                 <tr>
