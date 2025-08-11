@@ -35,6 +35,7 @@ export function CreationConstantParameterFormPage() {
     useState<keyof typeof configItems>("packaging");
   const [description, setDescription] = useState("");
   const [value, setValue] = useState("");
+  const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = async (event: FormEvent) => {
@@ -97,6 +98,8 @@ export function CreationConstantParameterFormPage() {
         default:
           break;
       }
+
+      setSuccess("Parâmetro cadastrado com sucesso!")
     } catch (error: unknown) {
       if (error instanceof Error) {
         setError(error.message);
@@ -112,7 +115,16 @@ export function CreationConstantParameterFormPage() {
         <Card.Header as="h3" className="text-center">
           Cadastro de parâmetros
         </Card.Header>
-        {error && <Alert variant="danger">{error}</Alert>}
+        {error && (
+          <Alert style={{ margin: "5px" }} variant="danger">
+            {error}
+          </Alert>
+        )}
+        {success && (
+          <Alert style={{ margin: "5px" }} variant="success">
+            {success}
+          </Alert>
+        )}
         <Card.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formItemType">
