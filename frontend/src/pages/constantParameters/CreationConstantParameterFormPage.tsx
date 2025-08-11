@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { Container, Card, Form, Button, Alert } from "react-bootstrap";
-import axios from "axios";
+import axios, { type AxiosResponse } from "axios";
 
 const API_URL = "/api";
 
@@ -30,15 +30,30 @@ const configItems = {
   },
 };
 
+interface IItemsWithCost {
+  id: number;
+  description: string;
+  cost: string;
+}
+
+interface IItemsWithPercent {
+  id: number;
+  description: string;
+  percent: string;
+}
+
 export function CreationConstantParameterFormPage() {
   const [itemType, setItemType] =
     useState<keyof typeof configItems>("packaging");
   const [description, setDescription] = useState("");
   const [value, setValue] = useState("");
+  const [parametersList, setParametersList] = useState<
+    IItemsWithCost[] | IItemsWithPercent[]
+  >([]);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = async (event: FormEvent) => {
+  const handleRegisterSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     if (!description) {
@@ -99,12 +114,77 @@ export function CreationConstantParameterFormPage() {
           break;
       }
 
-      setSuccess("Parâmetro cadastrado com sucesso!")
+      setSuccess("Parâmetro cadastrado com sucesso!");
     } catch (error: unknown) {
       if (error instanceof Error) {
         setError(error.message);
       } else {
         setError("Um erro desconhecido aconteceu!");
+      }
+    }
+  };
+
+  const handleListParametersSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+
+    let response: AxiosResponse;
+
+    try {
+      switch (itemType) {
+        case "packaging":
+          response = await apiClient.get(`${API_URL}/packaging/read`);
+
+          setParametersList(response.data.packagings);
+
+          break;
+        case "baleBag":
+          response = await apiClient.post(`${API_URL}/bale-bag/read`);
+
+          setParametersList(response.data.baleBags);
+
+          break;
+        case "commission":
+          response = await apiClient.post(`${API_URL}/commission/read`);
+
+          setParametersList(response.data.commissions);
+
+          break;
+        case "tax":
+          response = await apiClient.post(`${API_URL}/tax/read`);
+
+          setParametersList(response.data.taxes);
+
+          break;
+        case "freight":
+          response = await apiClient.post(`${API_URL}/freight/read`);
+
+          setParametersList(response.data.freights);
+
+          break;
+        case "contributionMargin":
+          response = await apiClient.post(`${API_URL}/contributionMargin/read`);
+
+          setParametersList(response.data.contributionMargins);
+
+          break;
+        case "st":
+          response = await apiClient.post(`${API_URL}/st/read`);
+
+          setParametersList(response.data.sts);
+
+          break;
+        default:
+          break;
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+
+        setParametersList([])
+      } else {
+        setError("Um erro desconhecido aconteceu!");
+
+        setParametersList([])
       }
     }
   };
@@ -126,7 +206,7 @@ export function CreationConstantParameterFormPage() {
           </Alert>
         )}
         <Card.Body>
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleRegisterSubmit}>
             <Form.Group className="mb-3" controlId="formItemType">
               <Form.Label>Tipo de parâmetro</Form.Label>
               <Form.Select
@@ -177,6 +257,59 @@ export function CreationConstantParameterFormPage() {
               </Button>
             </div>
           </Form>
+        </Card.Body>
+      </Card>
+
+      <Card className="mt-5 mb-5">
+        <Card.Header as="h3" className="text-center">
+          Listagem de parâmetros
+        </Card.Header>
+        {error && (
+          <Alert style={{ margin: "5px" }} variant="danger">
+            {error}
+          </Alert>
+        )}
+        {success && (
+          <Alert style={{ margin: "5px" }} variant="success">
+            {success}
+          </Alert>
+        )}
+        <Card.Body>
+          <Form onSubmit={handleListParametersSubmit}>
+            <Form.Group className="mb-3" controlId="formItemType">
+              <Form.Label>Tipo de parâmetro</Form.Label>
+              <Form.Select
+                value={itemType}
+                required
+                onChange={(event) => {
+                  setItemType(event.target.value as keyof typeof configItems);
+                }}
+              >
+                {Object.keys(configItems).map((key) => (
+                  <option key={key} value={key}>
+                    {configItems[key as keyof typeof configItems].name}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+
+            <div className="d-grid">
+              <Button
+                variant="primary"
+                type="submit"
+                className="btn-custom-orange"
+              >
+                Buscar
+              </Button>
+            </div>
+          </Form>
+          {parametersList && (
+            <ul>
+              {parametersList.map((parameter) => (
+                <li key={parameter.id}>{parameter.description}</li>
+              ))}
+            </ul>
+          )}
         </Card.Body>
       </Card>
     </Container>
