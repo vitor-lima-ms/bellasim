@@ -13,3 +13,9 @@ export const create = async (name: string, unit: string, unitCost: string) => {
 
   return rawMaterial;
 };
+
+export const read = async () => {
+  const rawMaterials = await prisma.rawMaterial.findMany();
+
+  return rawMaterials;
+};

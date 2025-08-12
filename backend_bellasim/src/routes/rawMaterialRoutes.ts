@@ -6,4 +6,6 @@ const router = Router();
 
 router.post("/create", authMiddleware, rawMaterialController.create);
 
+router.get("/read", authMiddleware, rawMaterialController.read);
+
 export default router;
