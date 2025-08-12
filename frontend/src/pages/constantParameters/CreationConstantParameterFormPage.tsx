@@ -50,7 +50,7 @@ export function CreationConstantParameterFormPage() {
   const [parametersList, setParametersList] = useState<
     IItemsWithCost[] | IItemsWithPercent[]
   >([]);
-  const [searched, setSearched] = useState(false)
+  const [searched, setSearched] = useState(false);
   const [registerSuccess, setRegisterSuccess] = useState("");
   const [registerError, setRegisterError] = useState("");
   const [listParametersError, setListParametersError] = useState("");
@@ -129,7 +129,7 @@ export function CreationConstantParameterFormPage() {
   const handleListParametersSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    setSearched(true)
+    setSearched(true);
 
     let response: AxiosResponse;
 
@@ -189,6 +189,49 @@ export function CreationConstantParameterFormPage() {
         setListParametersError("Um erro desconhecido aconteceu!");
 
         setParametersList([]);
+      }
+    }
+  };
+
+  const handleDeleteParameterById = async (id: number) => {
+    try {
+      switch (itemType) {
+        case "packaging":
+          await apiClient.delete(`${API_URL}/packaging/delete/${id}`);
+
+          break;
+        case "baleBag":
+          await apiClient.delete(`${API_URL}/bale-bag/delete/${id}`);
+
+          break;
+        case "commission":
+          await apiClient.delete(`${API_URL}/commission/delete/${id}`);
+
+          break;
+        case "tax":
+          await apiClient.delete(`${API_URL}/tax/delete/${id}`);
+
+          break;
+        case "freight":
+          await apiClient.delete(`${API_URL}/freight/delete/${id}`);
+
+          break;
+        case "contributionMargin":
+          await apiClient.delete(`${API_URL}/contribution-margin/delete/${id}`);
+
+          break;
+        case "st":
+          await apiClient.delete(`${API_URL}/st/delete/${id}`);
+
+          break;
+        default:
+          break;
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setListParametersError(error.message);
+      } else {
+        setListParametersError("Um erro desconhecido aconteceu!");
       }
     }
   };
@@ -285,7 +328,7 @@ export function CreationConstantParameterFormPage() {
                 onChange={(event) => {
                   setItemType(event.target.value as keyof typeof configItems);
 
-                  setSearched(false)
+                  setSearched(false);
                 }}
               >
                 {Object.keys(configItems).map((key) => (
@@ -310,36 +353,47 @@ export function CreationConstantParameterFormPage() {
             <Alert style={{ margin: "15px" }} variant="danger">
               Nenhum parâmetro encontrado!
             </Alert>
-          ) : searched && parametersList.length > 0 && (
-            <Table striped bordered hover responsive className="mt-4">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Descrição</th>
-                  <th>{configItems[itemType].field}</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                {parametersList.map((parameter) => (
-                  <tr key={parameter.id}>
-                    <td>{parameter.id}</td>
-                    <td>{parameter.description}</td>
-                    <td>
-                      {"cost" in parameter ? parameter.cost : parameter.percent}
-                    </td>
-                    <td>
-                      <Button variant="warning" size="sm">
-                        Editar
-                      </Button>{" "}
-                      <Button variant="danger" size="sm">
-                        Excluir
-                      </Button>
-                    </td>
+          ) : (
+            searched &&
+            parametersList.length > 0 && (
+              <Table striped bordered hover responsive className="mt-4">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Descrição</th>
+                    <th>{configItems[itemType].field}</th>
+                    <th>Ações</th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
+                </thead>
+                <tbody>
+                  {parametersList.map((parameter) => (
+                    <tr key={parameter.id}>
+                      <td>{parameter.id}</td>
+                      <td>{parameter.description}</td>
+                      <td>
+                        {"cost" in parameter
+                          ? parameter.cost
+                          : parameter.percent}
+                      </td>
+                      <td>
+                        <Button variant="warning" size="sm">
+                          Editar
+                        </Button>{" "}
+                        <Button
+                          variant="danger"
+                          size="sm"
+                          onClick={() => {
+                            handleDeleteParameterById(parameter.id);
+                          }}
+                        >
+                          Excluir
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            )
           )}
         </Card.Body>
       </Card>
