@@ -19,3 +19,7 @@ export const read = async () => {
 
   return rawMaterials;
 };
+
+export const deleteById = async (id: number) => {
+  await prisma.rawMaterial.delete({ where: { id: id } });
+};
