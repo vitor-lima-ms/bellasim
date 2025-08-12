@@ -8,6 +8,8 @@ router.post("/create", authMiddleware, baleBagController.create);
 
 router.get("/read", authMiddleware, baleBagController.read);
 
+router.get("/read/:id", authMiddleware, baleBagController.readById);
+
 router.put("/update/:id", authMiddleware, baleBagController.update);
 
 router.delete("/delete/:id", authMiddleware, baleBagController.deleteById);

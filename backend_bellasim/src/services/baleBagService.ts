@@ -19,6 +19,12 @@ export const read = async () => {
   return baleBags;
 };
 
+export const readById = async (id: number) => {
+  const baleBag = await prisma.baleBag.findUnique({ where: { id: id } });
+
+  return baleBag;
+};
+
 export const update = async (id: number, description: string, cost: string) => {
   const updatedBaleBag = await prisma.baleBag.update({
     where: { id: id },
