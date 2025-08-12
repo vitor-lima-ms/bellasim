@@ -194,34 +194,64 @@ export function CreationConstantParameterFormPage() {
   };
 
   const handleDeleteParameterById = async (id: number) => {
+    let response: AxiosResponse;
+
     try {
       switch (itemType) {
         case "packaging":
           await apiClient.delete(`${API_URL}/packaging/delete/${id}`);
 
+          response = await apiClient.get(`${API_URL}/packaging/read`);
+
+          setParametersList(response.data.packagings);
+
           break;
         case "baleBag":
           await apiClient.delete(`${API_URL}/bale-bag/delete/${id}`);
+
+          response = await apiClient.get(`${API_URL}/bale-bag/read`);
+
+          setParametersList(response.data.baleBags);
 
           break;
         case "commission":
           await apiClient.delete(`${API_URL}/commission/delete/${id}`);
 
+          response = await apiClient.get(`${API_URL}/commission/read`);
+
+          setParametersList(response.data.commissions);
+
           break;
         case "tax":
           await apiClient.delete(`${API_URL}/tax/delete/${id}`);
+
+          response = await apiClient.get(`${API_URL}/tax/read`);
+
+          setParametersList(response.data.taxes);
 
           break;
         case "freight":
           await apiClient.delete(`${API_URL}/freight/delete/${id}`);
 
+          response = await apiClient.get(`${API_URL}/freight/read`);
+
+          setParametersList(response.data.freights);
+
           break;
         case "contributionMargin":
           await apiClient.delete(`${API_URL}/contribution-margin/delete/${id}`);
 
+          response = await apiClient.get(`${API_URL}/contribution-margin/read`);
+
+          setParametersList(response.data.contributionMargins);
+
           break;
         case "st":
           await apiClient.delete(`${API_URL}/st/delete/${id}`);
+
+          response = await apiClient.get(`${API_URL}/st/read`);
+
+          setParametersList(response.data.sts);
 
           break;
         default:
