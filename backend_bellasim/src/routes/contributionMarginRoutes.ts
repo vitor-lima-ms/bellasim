@@ -8,4 +8,10 @@ router.post("/create", authMiddleware, contributionMarginController.create);
 
 router.get("/read", authMiddleware, contributionMarginController.read);
 
+router.delete(
+  "/delete",
+  authMiddleware,
+  contributionMarginController.deleteById
+);
+
 export default router;

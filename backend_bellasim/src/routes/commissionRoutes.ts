@@ -8,4 +8,6 @@ router.post("/create", authMiddleware, commissionController.create);
 
 router.get("/read", authMiddleware, commissionController.read);
 
+router.delete("/delete", authMiddleware, commissionController.deleteById)
+
 export default router;

@@ -8,4 +8,6 @@ router.post("/create", authMiddleware, baleBagController.create);
 
 router.get("/read", authMiddleware, baleBagController.read);
 
+router.delete("/delete", authMiddleware, baleBagController.deleteById)
+
 export default router;
