@@ -15,7 +15,11 @@ export const create = async (name: string, unit: string, unitCost: string) => {
 };
 
 export const read = async () => {
-  const rawMaterials = await prisma.rawMaterial.findMany();
+  const rawMaterials = await prisma.rawMaterial.findMany({
+    orderBy: {
+      name: "asc",
+    },
+  });
 
   return rawMaterials;
 };
