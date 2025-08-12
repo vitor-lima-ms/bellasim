@@ -8,6 +8,8 @@ router.post("/create", authMiddleware, commissionController.create);
 
 router.get("/read", authMiddleware, commissionController.read);
 
+router.get("/read/:id", authMiddleware, commissionController.readById);
+
 router.put("/update/:id", authMiddleware, commissionController.update);
 
 router.delete("/delete/:id", authMiddleware, commissionController.deleteById);

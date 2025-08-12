@@ -8,6 +8,8 @@ router.post("/create", authMiddleware, stController.create);
 
 router.get("/read", authMiddleware, stController.read);
 
+router.get("/read/:id", authMiddleware, stController.readById);
+
 router.put("/update/:id", authMiddleware, stController.update);
 
 router.delete("/delete/:id", authMiddleware, stController.deleteById);
