@@ -20,6 +20,32 @@ export const read = async () => {
   return rawMaterials;
 };
 
+export const readById = async (id: number) => {
+  const rawMaterial = await prisma.rawMaterial.findUnique({
+    where: { id: id },
+  });
+
+  return rawMaterial;
+};
+
+export const update = async (
+  id: number,
+  name: string,
+  unit: string,
+  unitCost: string
+) => {
+  const updatedRawMaterial = await prisma.rawMaterial.update({
+    where: { id: id },
+    data: {
+      name: name,
+      unit: unit,
+      unitCost: unitCost,
+    },
+  });
+
+  return updatedRawMaterial;
+};
+
 export const deleteById = async (id: number) => {
   await prisma.rawMaterial.delete({ where: { id: id } });
 };

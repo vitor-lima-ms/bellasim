@@ -25,6 +25,38 @@ export const read = async (req: Request, res: Response) => {
   }
 };
 
+export const readById = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+
+  try {
+    const rawMaterial = await rawMaterialService.readById(id);
+
+    res.status(200).json({ rawMaterial });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const update = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  const name = req.body.name;
+  const unit = req.body.unit;
+  const unitCost = req.body.unitCost;
+
+  try {
+    const updatedRawMaterial = await rawMaterialService.update(
+      id,
+      name,
+      unit,
+      unitCost
+    );
+
+    res.status(200).json({ updatedRawMaterial });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const deleteById = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
 
