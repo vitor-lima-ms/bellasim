@@ -17,6 +17,7 @@ import { CreateAndReadConstantParameterPage } from "./pages/constantParameters/C
 import { UpdateConstantParameterPage } from "./pages/constantParameters/UpdateConstantParameterPage";
 
 import { CreateAndReadRawMaterialPage } from "./pages/rawMaterial/CreateAndReadRawMaterialPage";
+import { UpdateRawMaterialPage } from "./pages/rawMaterial/UpdateRawMaterialPage";
 
 function AppContent() {
   const auth = useAuth();
@@ -100,6 +101,15 @@ function AppContent() {
           element={
             <ProtectedRoute>
               <CreateAndReadRawMaterialPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/update-raw-material/:id"
+          element={
+            <ProtectedRoute>
+              <UpdateRawMaterialPage />
             </ProtectedRoute>
           }
         />

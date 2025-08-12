@@ -1,4 +1,5 @@
 import { useState, useEffect, type FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import { Container, Card, Form, Button, Alert, Table } from "react-bootstrap";
 import axios from "axios";
 
@@ -23,6 +24,7 @@ export function CreateAndReadRawMaterialPage() {
   const [flag, setFlag] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -175,7 +177,13 @@ export function CreateAndReadRawMaterialPage() {
                     <td>{material.unit}</td>
                     <td>{material.unitCost}</td>
                     <td>
-                      <Button variant="warning" size="sm">
+                      <Button
+                        variant="warning"
+                        size="sm"
+                        onClick={() => {
+                          navigate(`/update-raw-material/${material.id}`);
+                        }}
+                      >
                         Editar
                       </Button>{" "}
                       <Button
