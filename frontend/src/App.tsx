@@ -13,7 +13,7 @@ import { LogoutPage } from "./pages/auth/LogoutPage";
 import { ForgotPasswordPage } from "./pages/auth/ForgotPasswordPage";
 import { ResetPasswordPage } from "./pages/auth/ResetPasswordPage";
 
-import { CreationConstantParameterFormPage } from "./pages/constantParameters/CreationConstantParameterFormPage";
+import { CreateAndReadConstantParameterPage } from "./pages/constantParameters/CreateAndReadConstantParameterPage";
 import { UpdateConstantParameterPage } from "./pages/constantParameters/UpdateConstantParameterPage";
 
 function AppContent() {
@@ -51,7 +51,7 @@ function AppContent() {
 
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        
+
         <Route
           path="/register"
           element={
@@ -60,7 +60,7 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
-        
+
         <Route
           path="/logout"
           element={
@@ -69,16 +69,16 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
-        
+
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        
+
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
-        
+
         <Route
           path="/constant-parameters"
           element={
             <ProtectedRoute>
-              <CreationConstantParameterFormPage />
+              <CreateAndReadConstantParameterPage />
             </ProtectedRoute>
           }
         />

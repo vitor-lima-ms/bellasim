@@ -43,7 +43,7 @@ interface IItemsWithPercent {
   percent: string;
 }
 
-export function CreationConstantParameterFormPage() {
+export function CreateAndReadConstantParameterPage() {
   const [itemType, setItemType] =
     useState<keyof typeof configItems>("packaging");
   const [description, setDescription] = useState("");
