@@ -24,6 +24,24 @@ export const read = async (req: Request, res: Response) => {
   }
 };
 
+export const update = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  const description = req.body.description;
+  const percent = req.body.percent;
+
+  try {
+    const updatedCommission = await commissionService.update(
+      id,
+      description,
+      percent
+    );
+
+    res.status(200).json({ updatedCommission });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const deleteById = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
 

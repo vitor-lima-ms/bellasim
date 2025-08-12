@@ -27,6 +27,24 @@ export const read = async (req: Request, res: Response) => {
   }
 };
 
+export const update = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  const description = req.body.description;
+  const percent = req.body.percent;
+
+  try {
+    const updatedContributionMargin = await contributionMarginService.update(
+      id,
+      description,
+      percent
+    );
+
+    res.status(200).json({ updatedContributionMargin });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const deleteById = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
 

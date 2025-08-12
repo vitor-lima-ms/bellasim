@@ -24,6 +24,24 @@ export const read = async (req: Request, res: Response) => {
   }
 };
 
+export const update = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+  const description = req.body.description;
+  const cost = req.body.cost;
+
+  try {
+    const updatedPackaging = await packagingService.update(
+      id,
+      description,
+      cost
+    );
+
+    res.status(200).json({ updatedPackaging });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const deleteById = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
 
