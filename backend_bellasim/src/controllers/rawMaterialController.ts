@@ -26,7 +26,7 @@ export const read = async (req: Request, res: Response) => {
 };
 
 export const deleteById = async (req: Request, res: Response) => {
-  const id = parseInt(req.body.id);
+  const id = parseInt(req.params.id);
 
   try {
     await rawMaterialService.deleteById(id);
