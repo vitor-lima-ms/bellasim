@@ -272,31 +272,31 @@ export function CreationConstantParameterFormPage() {
     try {
       switch (itemType) {
         case "packaging":
-          navigate(`/packaging/update/${id}`);
+          navigate(`/${itemType}/update-constant-parameter/${id}`);
 
           break;
         case "baleBag":
-          navigate(`/packaging/bale-bag/${id}`);
+          navigate(`/${itemType}/update-constant-parameter/${id}`);
 
           break;
         case "commission":
-          navigate(`/commission/update/${id}`);
+          navigate(`/${itemType}/update-constant-parameter/${id}`);
 
           break;
         case "tax":
-          navigate(`/tax/update/${id}`);
+          navigate(`/${itemType}/update-constant-parameter/${id}`);
 
           break;
         case "freight":
-          navigate(`/freight/update/${id}`);
+          navigate(`/${itemType}/update-constant-parameter/${id}`);
 
           break;
         case "contributionMargin":
-          navigate(`/contribution-margin/update/${id}`);
+          navigate(`/${itemType}/update-constant-parameter/${id}`);
 
           break;
         case "st":
-          navigate(`/st/update/${id}`);
+          navigate(`/${itemType}/update-constant-parameter/${id}`);
 
           break;
         default:
