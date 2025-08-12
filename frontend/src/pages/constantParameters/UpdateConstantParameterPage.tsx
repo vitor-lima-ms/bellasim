@@ -136,7 +136,7 @@ export function UpdateConstantParameterPage() {
             cost: value,
           });
 
-          navigate("/constant-parameters");
+          navigate("/constant-parameter");
 
           break;
         case "baleBag":
@@ -145,7 +145,7 @@ export function UpdateConstantParameterPage() {
             cost: value,
           });
 
-          navigate("/constant-parameters");
+          navigate("/constant-parameter");
 
           break;
         case "commission":
@@ -154,7 +154,7 @@ export function UpdateConstantParameterPage() {
             percent: value,
           });
 
-          navigate("/constant-parameters");
+          navigate("/constant-parameter");
 
           break;
         case "tax":
@@ -163,7 +163,7 @@ export function UpdateConstantParameterPage() {
             percent: value,
           });
 
-          navigate("/constant-parameters");
+          navigate("/constant-parameter");
 
           break;
         case "freight":
@@ -172,7 +172,7 @@ export function UpdateConstantParameterPage() {
             percent: value,
           });
 
-          navigate("/constant-parameters");
+          navigate("/constant-parameter");
 
           break;
         case "contributionMargin":
@@ -181,7 +181,7 @@ export function UpdateConstantParameterPage() {
             percent: value,
           });
 
-          navigate("/constant-parameters");
+          navigate("/constant-parameter");
 
           break;
         case "st":
@@ -190,7 +190,7 @@ export function UpdateConstantParameterPage() {
             percent: value,
           });
 
-          navigate("/constant-parameters");
+          navigate("/constant-parameter");
 
           break;
       }
