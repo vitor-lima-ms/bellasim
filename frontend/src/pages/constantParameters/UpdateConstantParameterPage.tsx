@@ -54,12 +54,62 @@ export function UpdateConstantParameterPage() {
 
       try {
         switch (itemType) {
+          case "packaging":
+            response = await apiClient.get(`${API_URL}/packaging/read/${id}`);
+
+            setDescription(response.data.packaging.description);
+
+            setValue(response.data.packaging.cost);
+
+            break;
           case "baleBag":
             response = await apiClient.get(`${API_URL}/bale-bag/read/${id}`);
 
             setDescription(response.data.baleBag.description);
 
             setValue(response.data.baleBag.cost);
+
+            break;
+          case "commission":
+            response = await apiClient.get(`${API_URL}/commission/read/${id}`);
+
+            setDescription(response.data.commission.description);
+
+            setValue(response.data.commission.percent);
+
+            break;
+          case "tax":
+            response = await apiClient.get(`${API_URL}/tax/read/${id}`);
+
+            setDescription(response.data.tax.description);
+
+            setValue(response.data.tax.percent);
+
+            break;
+          case "freight":
+            response = await apiClient.get(`${API_URL}/freight/read/${id}`);
+
+            setDescription(response.data.freight.description);
+
+            setValue(response.data.freight.percent);
+
+            break;
+          case "contributionMargin":
+            response = await apiClient.get(
+              `${API_URL}/contribution-margin/read/${id}`
+            );
+
+            setDescription(response.data.contributionMargin.description);
+
+            setValue(response.data.contributionMargin.percent);
+
+            break;
+          case "st":
+            response = await apiClient.get(`${API_URL}/st/read/${id}`);
+
+            setDescription(response.data.st.description);
+
+            setValue(response.data.st.percent);
 
             break;
         }
@@ -80,10 +130,64 @@ export function UpdateConstantParameterPage() {
 
     try {
       switch (itemType) {
+        case "packaging":
+          await apiClient.put(`${API_URL}/packaging/update/${id}`, {
+            description: description,
+            cost: value,
+          });
+
+          navigate("/constant-parameters");
+
+          break;
         case "baleBag":
           await apiClient.put(`${API_URL}/bale-bag/update/${id}`, {
             description: description,
             cost: value,
+          });
+
+          navigate("/constant-parameters");
+
+          break;
+        case "commission":
+          await apiClient.put(`${API_URL}/commission/update/${id}`, {
+            description: description,
+            percent: value,
+          });
+
+          navigate("/constant-parameters");
+
+          break;
+        case "tax":
+          await apiClient.put(`${API_URL}/tax/update/${id}`, {
+            description: description,
+            percent: value,
+          });
+
+          navigate("/constant-parameters");
+
+          break;
+        case "freight":
+          await apiClient.put(`${API_URL}/freight/update/${id}`, {
+            description: description,
+            percent: value,
+          });
+
+          navigate("/constant-parameters");
+
+          break;
+        case "contributionMargin":
+          await apiClient.put(`${API_URL}/contribution-margin/update/${id}`, {
+            description: description,
+            percent: value,
+          });
+
+          navigate("/constant-parameters");
+
+          break;
+        case "st":
+          await apiClient.put(`${API_URL}/st/update/${id}`, {
+            description: description,
+            percent: value,
           });
 
           navigate("/constant-parameters");
