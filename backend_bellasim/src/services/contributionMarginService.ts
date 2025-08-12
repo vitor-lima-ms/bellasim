@@ -14,7 +14,11 @@ export const create = async (description: string, percent: string) => {
 };
 
 export const read = async () => {
-  const contributionMargins = await prisma.contributionMargin.findMany();
+  const contributionMargins = await prisma.contributionMargin.findMany({
+    orderBy: {
+      description: "asc",
+    },
+  });
 
   return contributionMargins;
 };

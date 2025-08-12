@@ -14,7 +14,11 @@ export const create = async (description: string, percent: string) => {
 };
 
 export const read = async () => {
-  const sts = await prisma.sT.findMany();
+  const sts = await prisma.sT.findMany({
+    orderBy: {
+      description: "asc",
+    },
+  });
 
   return sts;
 };

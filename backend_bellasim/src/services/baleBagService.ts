@@ -14,7 +14,11 @@ export const create = async (description: string, cost: string) => {
 };
 
 export const read = async () => {
-  const baleBags = await prisma.baleBag.findMany();
+  const baleBags = await prisma.baleBag.findMany({
+    orderBy: {
+      description: "asc",
+    },
+  });
 
   return baleBags;
 };
