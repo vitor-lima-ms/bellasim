@@ -24,7 +24,7 @@ model User {
 
 model RawMaterial {
   id        Int      @id @default(autoincrement())
-  name      String
+  name      String   @unique
   unit      String
   unitCost  String
   Diaper    Diaper[]
