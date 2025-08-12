@@ -63,6 +63,22 @@ export function CreateAndReadRawMaterialPage() {
     }
   };
 
+  const handleDeleteParameterById = async (id: number) => {
+    try {
+      await apiClient.delete(`${API_URL}/raw-material/delete/${id}`);
+
+      const response = await apiClient.get(`${API_URL}/raw-material/read`);
+
+      setRawMaterialsList(response.data.rawMaterials);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Um erro desconhecido aconteceu!");
+      }
+    }
+  };
+
   useEffect(() => {
     const fetchRawMaterials = async () => {
       try {
@@ -139,6 +155,7 @@ export function CreateAndReadRawMaterialPage() {
           Listagem de matérias-primas
         </Card.Header>
         <Card.Body>
+          {error && <Alert variant="danger">{error}</Alert>}
           {rawMaterialsList.length > 0 ? (
             <Table striped bordered hover responsive>
               <thead>
@@ -161,7 +178,11 @@ export function CreateAndReadRawMaterialPage() {
                       <Button variant="warning" size="sm">
                         Editar
                       </Button>{" "}
-                      <Button variant="danger" size="sm">
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        onClick={() => handleDeleteParameterById(material.id)}
+                      >
                         Excluir
                       </Button>
                     </td>
