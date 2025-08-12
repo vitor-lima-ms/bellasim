@@ -16,6 +16,8 @@ import { ResetPasswordPage } from "./pages/auth/ResetPasswordPage";
 import { CreateAndReadConstantParameterPage } from "./pages/constantParameters/CreateAndReadConstantParameterPage";
 import { UpdateConstantParameterPage } from "./pages/constantParameters/UpdateConstantParameterPage";
 
+import { CreateAndReadRawMaterialPage } from "./pages/rawMaterial/CreateAndReadRawMaterialPage";
+
 function AppContent() {
   const auth = useAuth();
 
@@ -37,7 +39,8 @@ function AppContent() {
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
-                  <Nav.Link href="/constant-parameters">
+                  <Nav.Link href="/raw-material">Matérias-primas</Nav.Link>
+                  <Nav.Link href="/constant-parameter">
                     Parâmetros constantes
                   </Nav.Link>
                   <Nav.Link href="/register">Registrar</Nav.Link>
@@ -75,7 +78,7 @@ function AppContent() {
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
 
         <Route
-          path="/constant-parameters"
+          path="/constant-parameter"
           element={
             <ProtectedRoute>
               <CreateAndReadConstantParameterPage />
@@ -88,6 +91,15 @@ function AppContent() {
           element={
             <ProtectedRoute>
               <UpdateConstantParameterPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/raw-material"
+          element={
+            <ProtectedRoute>
+              <CreateAndReadRawMaterialPage />
             </ProtectedRoute>
           }
         />
