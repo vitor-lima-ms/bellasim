@@ -8,6 +8,8 @@ router.post("/create", authMiddleware, contributionMarginController.create);
 
 router.get("/read", authMiddleware, contributionMarginController.read);
 
+router.put("/update/:id", authMiddleware, contributionMarginController.update);
+
 router.delete(
   "/delete/:id",
   authMiddleware,

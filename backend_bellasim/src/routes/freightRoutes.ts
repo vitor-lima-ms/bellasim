@@ -8,6 +8,8 @@ router.post("/create", authMiddleware, freightController.create);
 
 router.get("/read", authMiddleware, freightController.read);
 
+router.put("/update/:id", authMiddleware, freightController.update);
+
 router.delete("/delete/:id", authMiddleware, freightController.deleteById);
 
 export default router;
