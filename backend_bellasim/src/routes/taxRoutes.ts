@@ -8,6 +8,6 @@ router.post("/create", authMiddleware, taxController.create);
 
 router.get("/read", authMiddleware, taxController.read);
 
-router.delete("/delete", authMiddleware, taxController.deleteById);
+router.delete("/delete/:id", authMiddleware, taxController.deleteById);
 
 export default router;

@@ -8,6 +8,6 @@ router.post("/create", authMiddleware, packagingController.create);
 
 router.get("/read", authMiddleware, packagingController.read);
 
-router.delete("/delete", authMiddleware, packagingController.deleteById);
+router.delete("/delete/:id", authMiddleware, packagingController.deleteById);
 
 export default router;

@@ -9,7 +9,7 @@ router.post("/create", authMiddleware, contributionMarginController.create);
 router.get("/read", authMiddleware, contributionMarginController.read);
 
 router.delete(
-  "/delete",
+  "/delete/:id",
   authMiddleware,
   contributionMarginController.deleteById
 );
