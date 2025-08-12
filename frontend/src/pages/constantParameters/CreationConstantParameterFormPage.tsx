@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import { Container, Card, Form, Button, Alert, Table } from "react-bootstrap";
 import axios, { type AxiosResponse } from "axios";
 
@@ -54,6 +55,7 @@ export function CreationConstantParameterFormPage() {
   const [registerSuccess, setRegisterSuccess] = useState("");
   const [registerError, setRegisterError] = useState("");
   const [listParametersError, setListParametersError] = useState("");
+  const navigate = useNavigate();
 
   const handleRegisterSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -266,6 +268,49 @@ export function CreationConstantParameterFormPage() {
     }
   };
 
+  const handleUpdateParameter = async (id: number) => {
+    try {
+      switch (itemType) {
+        case "packaging":
+          navigate(`/packaging/update/${id}`);
+
+          break;
+        case "baleBag":
+          navigate(`/packaging/bale-bag/${id}`);
+
+          break;
+        case "commission":
+          navigate(`/commission/update/${id}`);
+
+          break;
+        case "tax":
+          navigate(`/tax/update/${id}`);
+
+          break;
+        case "freight":
+          navigate(`/freight/update/${id}`);
+
+          break;
+        case "contributionMargin":
+          navigate(`/contribution-margin/update/${id}`);
+
+          break;
+        case "st":
+          navigate(`/st/update/${id}`);
+
+          break;
+        default:
+          break;
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setListParametersError(error.message);
+      } else {
+        setListParametersError("Um erro desconhecido aconteceu!");
+      }
+    }
+  };
+
   return (
     <Container className="mt-5">
       <Card>
@@ -406,7 +451,13 @@ export function CreationConstantParameterFormPage() {
                           : parameter.percent}
                       </td>
                       <td>
-                        <Button variant="warning" size="sm">
+                        <Button
+                          variant="warning"
+                          size="sm"
+                          onClick={() => {
+                            handleUpdateParameter(parameter.id);
+                          }}
+                        >
                           Editar
                         </Button>{" "}
                         <Button
