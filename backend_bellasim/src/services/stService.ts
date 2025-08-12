@@ -19,6 +19,12 @@ export const read = async () => {
   return sts;
 };
 
+export const readById = async (id: number) => {
+  const st = await prisma.sT.findUnique({ where: { id: id } });
+
+  return st;
+};
+
 export const update = async (
   id: number,
   description: string,

@@ -19,6 +19,12 @@ export const read = async () => {
   return packagings;
 };
 
+export const readById = async (id: number) => {
+  const packaging = await prisma.packaging.findUnique({ where: { id: id } });
+
+  return packaging;
+};
+
 export const update = async (id: number, description: string, cost: string) => {
   const updatedPackaging = await prisma.packaging.update({
     where: { id: id },

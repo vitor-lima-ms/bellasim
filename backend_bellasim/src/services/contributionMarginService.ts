@@ -35,6 +35,14 @@ export const update = async (
   return updateContributionMargin;
 };
 
+export const readById = async (id: number) => {
+  const contributionMargin = await prisma.contributionMargin.findUnique({
+    where: { id: id },
+  });
+
+  return contributionMargin;
+};
+
 export const deleteById = async (id: number) => {
   await prisma.contributionMargin.delete({ where: { id: id } });
 };

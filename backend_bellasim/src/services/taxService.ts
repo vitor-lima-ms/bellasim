@@ -19,6 +19,12 @@ export const read = async () => {
   return taxes;
 };
 
+export const readById = async (id: number) => {
+  const tax = await prisma.tax.findUnique({ where: { id: id } });
+
+  return tax;
+};
+
 export const update = async (
   id: number,
   description: string,

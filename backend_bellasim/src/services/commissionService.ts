@@ -19,6 +19,12 @@ export const read = async () => {
   return commissions;
 };
 
+export const readById = async (id: number) => {
+  const commission = await prisma.commission.findUnique({ where: { id: id } });
+
+  return commission;
+};
+
 export const update = async (
   id: number,
   description: string,

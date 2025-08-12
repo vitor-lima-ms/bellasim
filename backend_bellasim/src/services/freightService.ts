@@ -19,6 +19,12 @@ export const read = async () => {
   return freights;
 };
 
+export const readById = async (id: number) => {
+  const freight = await prisma.freight.findUnique({ where: { id: id } });
+
+  return freight;
+};
+
 export const update = async (
   id: number,
   description: string,
