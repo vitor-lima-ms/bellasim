@@ -24,6 +24,18 @@ export const read = async (req: Request, res: Response) => {
   }
 };
 
+export const readById = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id);
+
+  try {
+    const freight = await freightService.readById(id);
+
+    res.status(200).json({ freight });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const update = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
   const description = req.body.description;
