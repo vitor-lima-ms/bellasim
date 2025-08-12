@@ -20,11 +20,14 @@ export function CreateAndReadRawMaterialPage() {
   const [unit, setUnit] = useState("");
   const [unitCost, setUnitCost] = useState("");
   const [rawMaterialsList, setRawMaterialsList] = useState<IRawMaterial[]>([]);
+  const [flag, setFlag] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+
+    setFlag(true);
 
     setError("");
 
@@ -55,6 +58,8 @@ export function CreateAndReadRawMaterialPage() {
       } else {
         setError("Um erro desconhecido aconteceu!");
       }
+    } finally {
+      setFlag(false);
     }
   };
 
@@ -74,7 +79,7 @@ export function CreateAndReadRawMaterialPage() {
     };
 
     fetchRawMaterials();
-  }, []);
+  }, [flag]);
 
   return (
     <Container className="mt-5">
@@ -131,7 +136,7 @@ export function CreateAndReadRawMaterialPage() {
 
       <Card className="mt-5 mb-5">
         <Card.Header as="h3" className="text-center">
-          Listagem de matérias-Primas
+          Listagem de matérias-primas
         </Card.Header>
         <Card.Body>
           {rawMaterialsList.length > 0 ? (
