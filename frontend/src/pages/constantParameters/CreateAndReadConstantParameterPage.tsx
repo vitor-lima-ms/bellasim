@@ -60,16 +60,10 @@ export function CreateAndReadConstantParameterPage() {
   const handleRegisterSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    if (!description) {
-      setRegisterError("O campo de descrição é obrigatório! ");
+    if (!description || !value) {
+      setRegisterError("Todos os campos são obrigatórios!");
       return;
     }
-
-    if (!value) {
-      setRegisterError("O campo de valor é obrigatório! ");
-      return;
-    }
-
     try {
       switch (itemType) {
         case "packaging":
