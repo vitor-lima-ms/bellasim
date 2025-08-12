@@ -19,6 +19,22 @@ export const read = async () => {
   return sts;
 };
 
+export const update = async (
+  id: number,
+  description: string,
+  percent: string
+) => {
+  const updatedSt = await prisma.sT.update({
+    where: { id: id },
+    data: {
+      description: description,
+      percent: percent,
+    },
+  });
+
+  return updatedSt;
+};
+
 export const deleteById = async (id: number) => {
   await prisma.sT.delete({ where: { id: id } });
 };

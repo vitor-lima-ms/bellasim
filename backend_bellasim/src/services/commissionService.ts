@@ -19,6 +19,22 @@ export const read = async () => {
   return commissions;
 };
 
+export const update = async (
+  id: number,
+  description: string,
+  percent: string
+) => {
+  const updatedCommision = await prisma.commission.update({
+    where: { id: id },
+    data: {
+      description: description,
+      percent: percent,
+    },
+  });
+
+  return updatedCommision;
+};
+
 export const deleteById = async (id: number) => {
-  await prisma.commission.delete({where: {id: id}})
-}
+  await prisma.commission.delete({ where: { id: id } });
+};

@@ -19,6 +19,22 @@ export const read = async () => {
   return contributionMargins;
 };
 
+export const update = async (
+  id: number,
+  description: string,
+  percent: string
+) => {
+  const updateContributionMargin = await prisma.contributionMargin.update({
+    where: { id: id },
+    data: {
+      description: description,
+      percent: percent,
+    },
+  });
+
+  return updateContributionMargin;
+};
+
 export const deleteById = async (id: number) => {
   await prisma.contributionMargin.delete({ where: { id: id } });
 };

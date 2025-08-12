@@ -19,6 +19,18 @@ export const read = async () => {
   return packagings;
 };
 
+export const update = async (id: number, description: string, cost: string) => {
+  const updatedPackaging = await prisma.packaging.update({
+    where: { id: id },
+    data: {
+      description: description,
+      cost: cost,
+    },
+  });
+
+  return updatedPackaging;
+};
+
 export const deleteById = async (id: number) => {
   await prisma.packaging.delete({ where: { id: id } });
 };

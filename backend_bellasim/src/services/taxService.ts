@@ -19,6 +19,22 @@ export const read = async () => {
   return taxes;
 };
 
+export const update = async (
+  id: number,
+  description: string,
+  percent: string
+) => {
+  const updatedTax = await prisma.tax.update({
+    where: { id: id },
+    data: {
+      description: description,
+      percent: percent,
+    },
+  });
+
+  return updatedTax;
+};
+
 export const deleteById = async (id: number) => {
   await prisma.tax.delete({ where: { id: id } });
 };
