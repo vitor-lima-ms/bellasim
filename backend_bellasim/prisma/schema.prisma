@@ -23,15 +23,13 @@ model User {
 }
 
 model RawMaterial {
-  id          Int      @id @default(autoincrement())
-  name        String
-  unit        String
-  unitCost    String
-  weigth      String
-  Diaper      Diaper[]
-  diaperModel String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        Int      @id @default(autoincrement())
+  name      String
+  unit      String
+  unitCost  String
+  Diaper    Diaper[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Packaging {
@@ -101,6 +99,7 @@ model Diaper {
   id                        Int                @id @default(autoincrement())
   model                     String             @unique
   rawMaterials              RawMaterial[]
+  rawMaterialsWeight        Json[]
   costPerRawMaterial        Json[]
   packageQuantity           String
   Packaging                 Packaging          @relation(fields: [packagingCost], references: [cost])
@@ -111,7 +110,7 @@ model Diaper {
   diaperUnitCost            String
   Commission                Commission         @relation(fields: [commissionPercent], references: [percent])
   commissionPercent         String
-  Taxes                     Tax              @relation(fields: [taxesPercent], references: [percent])
+  Taxes                     Tax                @relation(fields: [taxesPercent], references: [percent])
   taxesPercent              String
   Freight                   Freight            @relation(fields: [freightPercent], references: [percent])
   freightPercent            String
