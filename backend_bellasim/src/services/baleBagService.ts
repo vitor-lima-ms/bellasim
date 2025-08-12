@@ -18,3 +18,7 @@ export const read = async () => {
 
   return baleBags;
 };
+
+export const deleteById = async (id: number) => {
+  await prisma.baleBag.delete({ where: { id: id } });
+};

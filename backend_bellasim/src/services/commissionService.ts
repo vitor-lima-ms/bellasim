@@ -18,3 +18,7 @@ export const read = async () => {
 
   return commissions;
 };
+
+export const deleteById = async (id: number) => {
+  await prisma.commission.delete({where: {id: id}})
+}

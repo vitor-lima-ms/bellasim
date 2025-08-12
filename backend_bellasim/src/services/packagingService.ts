@@ -18,3 +18,7 @@ export const read = async () => {
 
   return packagings;
 };
+
+export const deleteById = async (id: number) => {
+  await prisma.packaging.delete({ where: { id: id } });
+};

@@ -18,3 +18,7 @@ export const read = async () => {
 
   return contributionMargins;
 };
+
+export const deleteById = async (id: number) => {
+  await prisma.contributionMargin.delete({ where: { id: id } });
+};

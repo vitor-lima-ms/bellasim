@@ -18,3 +18,7 @@ export const read = async () => {
 
   return freights;
 };
+
+export const deleteById = async (id: number) => {
+  await prisma.freight.delete({ where: { id: id } });
+};
