@@ -314,7 +314,7 @@ export function CreationConstantParameterFormPage() {
             <Table striped bordered hover responsive className="mt-4">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>#</th>
                   <th>Descrição</th>
                   <th>{configItems[itemType].field}</th>
                   <th>Ações</th>
