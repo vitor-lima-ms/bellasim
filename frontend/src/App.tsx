@@ -7,6 +7,8 @@ import { Routes, Route } from "react-router-dom";
 
 import { Container, Nav, Navbar } from "react-bootstrap";
 
+import { IndexPage } from "./pages/IndexPage";
+
 import { LoginPage } from "./pages/auth/LoginPage";
 import { RegisterPage } from "./pages/auth/RegisterPage";
 import { LogoutPage } from "./pages/auth/LogoutPage";
@@ -40,6 +42,7 @@ function AppContent() {
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
+                  <Nav.Link href="/">Página principal</Nav.Link>
                   <Nav.Link href="/raw-material">Matérias-primas</Nav.Link>
                   <Nav.Link href="/constant-parameter">
                     Parâmetros constantes
@@ -54,6 +57,15 @@ function AppContent() {
       )}
 
       <Routes>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <IndexPage />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="/login" element={<LoginPage />} />
 
         <Route
