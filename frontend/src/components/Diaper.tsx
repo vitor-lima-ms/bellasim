@@ -44,11 +44,10 @@ export function Diaper(props: { modelProp: string }) {
   const [packagingCost, setPackagingCost] = useState("");
   const [stPercent, setStPercent] = useState("");
   const [taxPercent, setTaxPercent] = useState("");
-  // const [rawMaterials, setRawMaterials] = useState<IRawMaterial[]>([]);
 
   const [error, setError] = useState("");
 
-  // Chamada para listagem de baleBags
+  // Chamada para listagem de parâmetros constantes e matérias-primas
   useEffect(() => {
     const fetchBaleBags = async () => {
       try {
@@ -64,11 +63,6 @@ export function Diaper(props: { modelProp: string }) {
       }
     };
 
-    fetchBaleBags();
-  }, []);
-
-  // Chamada para listagem de commissions
-  useEffect(() => {
     const fetchCommissions = async () => {
       try {
         const response = await apiClient.get(`${API_URL}/commission/read`);
@@ -83,11 +77,6 @@ export function Diaper(props: { modelProp: string }) {
       }
     };
 
-    fetchCommissions();
-  }, []);
-
-  // Chamada para listagem de contributionMargins
-  useEffect(() => {
     const fetchContributionMargins = async () => {
       try {
         const response = await apiClient.get(
@@ -104,11 +93,6 @@ export function Diaper(props: { modelProp: string }) {
       }
     };
 
-    fetchContributionMargins();
-  }, []);
-
-  // Chamada para listagem de freights
-  useEffect(() => {
     const fetchFreights = async () => {
       try {
         const response = await apiClient.get(`${API_URL}/freight/read`);
@@ -123,11 +107,6 @@ export function Diaper(props: { modelProp: string }) {
       }
     };
 
-    fetchFreights();
-  }, []);
-
-  // Chamada para listagem de packagings
-  useEffect(() => {
     const fetchPackagings = async () => {
       try {
         const response = await apiClient.get(`${API_URL}/packaging/read`);
@@ -142,11 +121,6 @@ export function Diaper(props: { modelProp: string }) {
       }
     };
 
-    fetchPackagings();
-  }, []);
-
-  // Chamada para listagem de sts
-  useEffect(() => {
     const fetchSts = async () => {
       try {
         const response = await apiClient.get(`${API_URL}/st/read`);
@@ -161,11 +135,6 @@ export function Diaper(props: { modelProp: string }) {
       }
     };
 
-    fetchSts();
-  }, []);
-
-  // Chamada para listagem de taxes
-  useEffect(() => {
     const fetchTaxes = async () => {
       try {
         const response = await apiClient.get(`${API_URL}/tax/read`);
@@ -180,11 +149,6 @@ export function Diaper(props: { modelProp: string }) {
       }
     };
 
-    fetchTaxes();
-  }, []);
-
-  // Chamada para listagem de rawMaterials
-  useEffect(() => {
     const fetchRawMaterials = async () => {
       try {
         const response = await apiClient.get(`${API_URL}/raw-material/read`);
@@ -198,6 +162,20 @@ export function Diaper(props: { modelProp: string }) {
         }
       }
     };
+
+    fetchBaleBags();
+
+    fetchCommissions();
+
+    fetchContributionMargins();
+
+    fetchFreights();
+
+    fetchPackagings();
+
+    fetchSts();
+
+    fetchTaxes();
 
     fetchRawMaterials();
   }, []);
@@ -256,30 +234,20 @@ export function Diaper(props: { modelProp: string }) {
               </Row>
 
               <Form.Group className="mb-3" controlId="formRawMaterials">
-                <Form.Label>Matérias-Primas</Form.Label>
+                <Form.Label>Matérias-primas</Form.Label>
                 <Card>
-                  <Card.Body>
+                  <Card.Body style={{ maxHeight: "400px", overflowY: "auto" }}>
                     {rawMaterialsList.map((rawMaterial) => (
-                      <Row
-                        key={rawMaterial.id}
-                        className="align-items-center mb-2"
-                      >
-                        <Col xs={6} md={6}>
-                          <Form.Check
-                            type="checkbox"
-                            id={`raw-material-${rawMaterial.id}`}
-                            label={rawMaterial.name}
-                          />
-                        </Col>
-                        <Col xs={6} md={6}>
-                          <Form.Control
-                            type="number"
-                            step="0.0001"
-                            min={0}
-                            placeholder="Quantidade"
-                          />
-                        </Col>
-                      </Row>
+                      <>
+                        <Form.Label>{rawMaterial.name}</Form.Label>
+                        <Form.Control
+                          className="mb-2"
+                          type="number"
+                          step="0.0001"
+                          min={0}
+                          placeholder="Quantidade"
+                        />
+                      </>
                     ))}
                   </Card.Body>
                 </Card>
