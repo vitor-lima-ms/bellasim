@@ -13,10 +13,12 @@ interface IConstantParameter {
   percent?: string;
 }
 
-// interface IRawMaterial {
-//   id: number;
-//   name: string;
-// }
+interface IRawMaterial {
+  id: number;
+  name: string;
+  unit: string;
+  unitCost: string;
+}
 
 export function Diaper(props: { modelProp: string }) {
   // Variáveis para armazenar as listas de parâmetros constantes
@@ -30,6 +32,8 @@ export function Diaper(props: { modelProp: string }) {
   const [packagings, setPackagings] = useState<IConstantParameter[]>([]);
   const [sts, setSts] = useState<IConstantParameter[]>([]);
   const [taxes, setTaxes] = useState<IConstantParameter[]>([]);
+  // Variável para armazenar as matérias-primas
+  const [rawMaterialsList, setRawMaterialsList] = useState<IRawMaterial[]>([]);
   // Variáveis para serem enviadas para a API
   const model = props.modelProp;
   const [baleBagCost, setBaleBagCost] = useState("");
@@ -40,6 +44,7 @@ export function Diaper(props: { modelProp: string }) {
   const [packagingCost, setPackagingCost] = useState("");
   const [stPercent, setStPercent] = useState("");
   const [taxPercent, setTaxPercent] = useState("");
+  // const [rawMaterials, setRawMaterials] = useState<IRawMaterial[]>([]);
 
   const [error, setError] = useState("");
 
@@ -178,6 +183,25 @@ export function Diaper(props: { modelProp: string }) {
     fetchTaxes();
   }, []);
 
+  // Chamada para listagem de rawMaterials
+  useEffect(() => {
+    const fetchRawMaterials = async () => {
+      try {
+        const response = await apiClient.get(`${API_URL}/raw-material/read`);
+
+        setRawMaterialsList(response.data.rawMaterials);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError("Um erro desconhecido aconteceu!");
+        }
+      }
+    };
+
+    fetchRawMaterials();
+  }, []);
+
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
@@ -204,7 +228,7 @@ export function Diaper(props: { modelProp: string }) {
         {model}
       </Card.Header>
       <Row>
-        <Col md={7}>
+        <Col md={6}>
           <Card.Body>
             {error && <Alert variant="danger">{error}</Alert>}
             <Form onSubmit={handleSubmit}>
@@ -232,12 +256,32 @@ export function Diaper(props: { modelProp: string }) {
               </Row>
 
               <Form.Group className="mb-3" controlId="formRawMaterials">
-                <Form.Label>Matérias-primas</Form.Label>
-                <Card body className="text-center">
-                  <p className="mb-0">
-                    Aqui entrará um componente mais complexo para selecionar
-                    múltiplas matérias-primas e seus respectivos pesos.
-                  </p>
+                <Form.Label>Matérias-Primas</Form.Label>
+                <Card>
+                  <Card.Body>
+                    {rawMaterialsList.map((rawMaterial) => (
+                      <Row
+                        key={rawMaterial.id}
+                        className="align-items-center mb-2"
+                      >
+                        <Col xs={6} md={6}>
+                          <Form.Check
+                            type="checkbox"
+                            id={`raw-material-${rawMaterial.id}`}
+                            label={rawMaterial.name}
+                          />
+                        </Col>
+                        <Col xs={6} md={6}>
+                          <Form.Control
+                            type="number"
+                            step="0.0001"
+                            min={0}
+                            placeholder="Quantidade"
+                          />
+                        </Col>
+                      </Row>
+                    ))}
+                  </Card.Body>
                 </Card>
               </Form.Group>
 
@@ -283,7 +327,7 @@ export function Diaper(props: { modelProp: string }) {
               </Row>
 
               <Row>
-                <Col md={6}>
+                <Col md={4}>
                   <Form.Group className="mb-3" controlId="formCommission">
                     <Form.Label>Comissão (%)</Form.Label>
                     <Form.Select
@@ -304,7 +348,7 @@ export function Diaper(props: { modelProp: string }) {
                     </Form.Select>
                   </Form.Group>
                 </Col>
-                <Col md={6}>
+                <Col md={4}>
                   <Form.Group className="mb-3" controlId="formTaxes">
                     <Form.Label>Impostos (%)</Form.Label>
                     <Form.Select
@@ -323,9 +367,6 @@ export function Diaper(props: { modelProp: string }) {
                     </Form.Select>
                   </Form.Group>
                 </Col>
-              </Row>
-
-              <Row>
                 <Col md={4}>
                   <Form.Group className="mb-3" controlId="formFreight">
                     <Form.Label>Frete (%)</Form.Label>
@@ -347,7 +388,10 @@ export function Diaper(props: { modelProp: string }) {
                     </Form.Select>
                   </Form.Group>
                 </Col>
-                <Col md={4}>
+              </Row>
+
+              <Row>
+                <Col md={6}>
                   <Form.Group
                     className="mb-3"
                     controlId="formContributionMargin"
@@ -374,7 +418,7 @@ export function Diaper(props: { modelProp: string }) {
                     </Form.Select>
                   </Form.Group>
                 </Col>
-                <Col md={4}>
+                <Col md={6}>
                   <Form.Group className="mb-3" controlId="formST">
                     <Form.Label>Substituição Tributária (%)</Form.Label>
                     <Form.Select
@@ -403,7 +447,7 @@ export function Diaper(props: { modelProp: string }) {
             </Form>
           </Card.Body>
         </Col>
-        <Col md={5}></Col>
+        <Col md={6}></Col>
       </Row>
     </Card>
   );
