@@ -13,11 +13,16 @@ interface IConstantParameter {
   percent?: string;
 }
 
-interface IRawMaterial {
+interface IRawMaterialFromAPI {
   id: number;
   name: string;
   unit: string;
   unitCost: string;
+}
+
+interface IRawMaterialToAPI {
+  name: string;
+  weigth: string;
 }
 
 export function Diaper(props: { modelProp: string }) {
@@ -33,7 +38,9 @@ export function Diaper(props: { modelProp: string }) {
   const [sts, setSts] = useState<IConstantParameter[]>([]);
   const [taxes, setTaxes] = useState<IConstantParameter[]>([]);
   // Variável para armazenar as matérias-primas
-  const [rawMaterialsList, setRawMaterialsList] = useState<IRawMaterial[]>([]);
+  const [rawMaterialsList, setRawMaterialsList] = useState<
+    IRawMaterialFromAPI[]
+  >([]);
   // Variáveis para serem enviadas para a API
   const model = props.modelProp;
   const [baleBagCost, setBaleBagCost] = useState("");
@@ -44,6 +51,9 @@ export function Diaper(props: { modelProp: string }) {
   const [packagingCost, setPackagingCost] = useState("");
   const [stPercent, setStPercent] = useState("");
   const [taxPercent, setTaxPercent] = useState("");
+  const [rawMaterialsWeights, setRawMaterialsWeight] = useState<
+    IRawMaterialToAPI[]
+  >([]);
 
   const [error, setError] = useState("");
 
@@ -195,6 +205,7 @@ export function Diaper(props: { modelProp: string }) {
       freightPercent,
       contributionMarginPercent,
       stPercent,
+      rawMaterialsWeights,
     };
 
     console.log("Dados a serem enviados:", formData);
@@ -246,6 +257,15 @@ export function Diaper(props: { modelProp: string }) {
                           step="0.0001"
                           min={0}
                           placeholder="Quantidade"
+                          onChange={(event) => {
+                            setRawMaterialsWeight([
+                              ...rawMaterialsWeights,
+                              {
+                                name: rawMaterial.name,
+                                weigth: event.target.value,
+                              },
+                            ]);
+                          }}
                         />
                       </>
                     ))}
