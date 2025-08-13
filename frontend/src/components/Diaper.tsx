@@ -397,7 +397,7 @@ export function Diaper(props: { modelProp: string }) {
 
               <div className="d-grid mt-3">
                 <Button className="btn-custom-orange" type="submit">
-                  Cadastrar
+                  Simular
                 </Button>
               </div>
             </Form>
