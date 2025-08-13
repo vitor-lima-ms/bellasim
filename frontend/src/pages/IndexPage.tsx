@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Container, Card, Row, Col, Button } from "react-bootstrap";
 // import axios from "axios";
 
-import { Bellafral } from "../components/diaper/bellafral";
+import { Diaper } from "../components/Diaper";
 
 // const API_URL = "/api";
 
@@ -102,10 +102,10 @@ export function IndexPage() {
 
       <Row className="mt-3 mb-5">
         <Col>
-          {bellafral && <Bellafral />}
-          {bellafralBasic}
-          {bellafralMille}
-          {bigConfort}
+          {bellafral && <Diaper modelProp="Bellafral" />}
+          {bellafralBasic && <Diaper modelProp="Bellafral Basic" />}
+          {bellafralMille && <Diaper modelProp="Bellafral Mille" />}
+          {bigConfort && <Diaper modelProp="Big Confort" />}
         </Col>
       </Row>
     </Container>
