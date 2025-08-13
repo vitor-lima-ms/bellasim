@@ -118,11 +118,11 @@ model Diaper {
   contributionMarginPercent String
   ST                        ST                 @relation(fields: [STPercent], references: [percent])
   STPercent                 String
-  salePrice                 String
-  unitSalePrice             String
-  salePriceWithST           String
-  unitSalePriceWithST       String
-  finalSalePrice            String
+  salePrice                 String?
+  unitSalePrice             String?
+  salePriceWithST           String?
+  unitSalePriceWithST       String?
+  finalSalePrice            String?
   createdAt                 DateTime           @default(now())
   updatedAt                 DateTime           @updatedAt
 }

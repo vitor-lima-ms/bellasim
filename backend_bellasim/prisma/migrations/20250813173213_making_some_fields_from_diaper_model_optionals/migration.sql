@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "public"."Diaper" ALTER COLUMN "salePrice" DROP NOT NULL,
+ALTER COLUMN "unitSalePrice" DROP NOT NULL,
+ALTER COLUMN "salePriceWithST" DROP NOT NULL,
+ALTER COLUMN "unitSalePriceWithST" DROP NOT NULL,
+ALTER COLUMN "finalSalePrice" DROP NOT NULL;
