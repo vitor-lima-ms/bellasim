@@ -241,7 +241,7 @@ export function UpdateConstantParameterPage() {
                     Salvar alterações
                   </Button>
                   <Link
-                    to="/constant-parameters"
+                    to="/constant-parameter"
                     className="btn btn-secondary fw-bold"
                   >
                     Cancelar
