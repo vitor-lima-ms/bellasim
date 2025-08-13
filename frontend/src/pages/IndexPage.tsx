@@ -1,14 +1,7 @@
 import { useState } from "react";
 import { Container, Card, Row, Col, Button } from "react-bootstrap";
-// import axios from "axios";
 
 import { Diaper } from "../components/Diaper";
-
-// const API_URL = "/api";
-
-// const apiClient = axios.create({
-//   withCredentials: true,
-// });
 
 export function IndexPage() {
   const [bellafral, setBellafral] = useState(false);
