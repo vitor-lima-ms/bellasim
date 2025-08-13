@@ -108,7 +108,7 @@ export function UpdateRawMaterialPage() {
                   <Form.Label>Custo unitário (R$)</Form.Label>
                   <Form.Control
                     type="number"
-                    step="0.01"
+                    step="0.0001"
                     min="0"
                     value={unitCost}
                     onChange={(event) => setUnitCost(event.target.value)}

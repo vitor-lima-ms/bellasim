@@ -228,7 +228,7 @@ export function UpdateConstantParameterPage() {
                   <Form.Label>{configItems[itemType].field}</Form.Label>
                   <Form.Control
                     type="number"
-                    step="0.01"
+                    step="0.0001"
                     min={0}
                     value={value}
                     onChange={(event) => setValue(event.target.value)}
