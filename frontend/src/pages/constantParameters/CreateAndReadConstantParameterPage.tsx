@@ -312,12 +312,12 @@ export function CreateAndReadConstantParameterPage() {
           Cadastro de parâmetros
         </Card.Header>
         {registerError && (
-          <Alert style={{ margin: "5px" }} variant="danger">
+          <Alert style={{ margin: "10px" }} variant="danger">
             {registerError}
           </Alert>
         )}
         {registerSuccess && (
-          <Alert style={{ margin: "5px" }} variant="success">
+          <Alert style={{ margin: "10px" }} variant="success">
             {registerSuccess}
           </Alert>
         )}
