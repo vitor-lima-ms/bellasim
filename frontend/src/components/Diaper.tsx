@@ -20,11 +20,6 @@ interface IRawMaterialFromAPI {
   unitCost: string;
 }
 
-interface IRawMaterialToAPI {
-  name: string;
-  weigth: string;
-}
-
 export function Diaper(props: { modelProp: string }) {
   // Variáveis para armazenar as listas de parâmetros constantes
   const [packageQuantity, setPackageQuantity] = useState("");
@@ -52,8 +47,8 @@ export function Diaper(props: { modelProp: string }) {
   const [stPercent, setStPercent] = useState("");
   const [taxPercent, setTaxPercent] = useState("");
   const [rawMaterialsWeights, setRawMaterialsWeight] = useState<
-    IRawMaterialToAPI[]
-  >([]);
+    Map<string, string>
+  >(new Map());
 
   const [error, setError] = useState("");
 
@@ -195,6 +190,8 @@ export function Diaper(props: { modelProp: string }) {
 
     setError("");
 
+    const rawMaterialsWeightsJSON = Object.fromEntries(rawMaterialsWeights);
+
     const formData = {
       model,
       packageQuantity,
@@ -205,7 +202,7 @@ export function Diaper(props: { modelProp: string }) {
       freightPercent,
       contributionMarginPercent,
       stPercent,
-      rawMaterialsWeights,
+      rawMaterialsWeightsJSON,
     };
 
     console.log("Dados a serem enviados:", formData);
@@ -258,13 +255,12 @@ export function Diaper(props: { modelProp: string }) {
                           min={0}
                           placeholder="Quantidade"
                           onChange={(event) => {
-                            setRawMaterialsWeight([
-                              ...rawMaterialsWeights,
-                              {
-                                name: rawMaterial.name,
-                                weigth: event.target.value,
-                              },
-                            ]);
+                            setRawMaterialsWeight(
+                              rawMaterialsWeights.set(
+                                rawMaterial.name,
+                                event.target.value
+                              )
+                            );
                           }}
                         />
                       </>
