@@ -6,89 +6,90 @@ import { sendMail } from "../utils/sendMailUtil";
 
 const prisma = new PrismaClient();
 
-export const register = async (
-  name: string,
-  email: string,
-  password: string,
-  confirmPassword: string,
-  role: string
-) => {
-  const existingUser = await prisma.user.findUnique({
-    where: { email: email },
-  });
+export class AuthService {
+  static async register(
+    name: string,
+    email: string,
+    password: string,
+    confirmPassword: string,
+    role: string
+  ) {
+    const existingUser = await prisma.user.findUnique({
+      where: { email: email },
+    });
 
-  if (existingUser) {
-    throw new Error("Este e-mail já está em uso!");
+    if (existingUser) {
+      throw new Error("Este e-mail já está em uso!");
+    }
+
+    if (password !== confirmPassword) {
+      throw new Error("As senhas não coincidem!");
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await prisma.user.create({
+      data: { name: name, email: email, password: hashedPassword, role: role },
+    });
+
+    return user;
   }
 
-  if (password !== confirmPassword) {
-    throw new Error("As senhas não coincidem!");
-  }
+  static async login(email: string, password: string) {
+    const user = await prisma.user.findUnique({ where: { email: email } });
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+    if (!user) {
+      throw new Error("Credenciais inválidas!");
+    }
 
-  const user = await prisma.user.create({
-    data: { name: name, email: email, password: hashedPassword, role: role },
-  });
+    const isPassValid = await bcrypt.compare(password, user.password);
 
-  return user;
-};
+    if (!isPassValid) {
+      throw new Error("Credenciais inválidas!");
+    }
 
-export const login = async (email: string, password: string) => {
-  const user = await prisma.user.findUnique({ where: { email: email } });
-
-  if (!user) {
-    throw new Error("Credenciais inválidas!");
-  }
-
-  const isPassValid = await bcrypt.compare(password, user.password);
-
-  if (!isPassValid) {
-    throw new Error("Credenciais inválidas!");
-  }
-
-  const token = jwt.sign(
-    {
-      userId: user.id,
-      email: user.email,
-    },
-    process.env.JWT_SECRET!,
-    { expiresIn: "8h" }
-  );
-
-  return { token, user };
-};
-
-export const forgotPassword = async (email: string) => {
-  const user = await prisma.user.findUnique({ where: { email: email } });
-
-  if (!user) {
-    throw new Error(
-      "Se o e-mail estiver na nossa base de dados, um link de recuperação será enviado!"
+    const token = jwt.sign(
+      {
+        userId: user.id,
+        email: user.email,
+      },
+      process.env.JWT_SECRET!,
+      { expiresIn: "8h" }
     );
+
+    return { token, user };
   }
 
-  const resetToken = crypto.randomBytes(32).toString("hex");
+  static async forgotPassword(email: string) {
+    const user = await prisma.user.findUnique({ where: { email: email } });
 
-  const passwordResetToken = crypto
-    .createHash("sha256")
-    .update(resetToken)
-    .digest("hex");
+    if (!user) {
+      throw new Error(
+        "Se o e-mail estiver na nossa base de dados, um link de recuperação será enviado!"
+      );
+    }
 
-  const passwordResetExpires = new Date(Date.now() + 10 * 60 * 1000);
+    const resetToken = crypto.randomBytes(32).toString("hex");
 
-  await prisma.user.update({
-    where: { email: email },
-    data: {
-      passwordResetToken: passwordResetToken,
-      passwordResetExpires: passwordResetExpires,
-    },
-  });
+    const passwordResetToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
 
-  const resetUrl = `http://localhost/reset-password/${resetToken}`;
+    const passwordResetExpires = new Date(Date.now() + 10 * 60 * 1000);
 
-  try {
-    const emailHtml = `
+    await prisma.user.update({
+      where: { email: email },
+      data: {
+        passwordResetToken: passwordResetToken,
+        passwordResetExpires: passwordResetExpires,
+      },
+    });
+
+    const resetUrl = `http://localhost/reset-password/${resetToken}`;
+
+    try {
+      const emailHtml = `
       <div style="font-family: Arial, sans-serif; line-height: 1.6;">
         <h2>Recuperação de senha</h2>
         <p>Você solicitou uma redefinição de senha. Por favor, clique no link abaixo para criar uma nova senha:</p>
@@ -102,66 +103,67 @@ export const forgotPassword = async (email: string) => {
       </div>
     `;
 
-    await sendMail({
-      to: email,
-      subject: "Ambtec - Redefinição de senha",
-      text: `Aqui estáo link para redefinir sua senha: ${resetUrl}`,
-      html: emailHtml,
+      await sendMail({
+        to: email,
+        subject: "Ambtec - Redefinição de senha",
+        text: `Aqui estáo link para redefinir sua senha: ${resetUrl}`,
+        html: emailHtml,
+      });
+    } catch (error: any) {
+      await prisma.user.update({
+        where: { email: email },
+        data: {
+          passwordResetToken: null,
+          passwordResetExpires: null,
+        },
+      });
+
+      console.log(error);
+
+      throw new Error(
+        "Houve um erro ao enviar o e-mail. Tente novamente mais tarde!"
+      );
+    }
+
+    return { message: "Link de recuperação enviado!" };
+  }
+
+  static async resetPassword(
+    token: string,
+    password: string,
+    confirmPassword: string
+  ) {
+    if (password !== confirmPassword) {
+      throw new Error("As senhas não coincidem!");
+    }
+
+    const passwordResetToken = crypto
+      .createHash("sha256")
+      .update(token)
+      .digest("hex");
+
+    const user = await prisma.user.findFirst({
+      where: {
+        passwordResetToken: passwordResetToken,
+        passwordResetExpires: { gte: new Date() },
+      },
     });
-  } catch (error: any) {
+
+    if (!user) {
+      throw new Error("Token inválido ou expirado!");
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     await prisma.user.update({
-      where: { email: email },
+      where: { id: user.id },
       data: {
+        password: hashedPassword,
         passwordResetToken: null,
         passwordResetExpires: null,
       },
     });
 
-    console.log(error);
-
-    throw new Error(
-      "Houve um erro ao enviar o e-mail. Tente novamente mais tarde!"
-    );
+    return { message: "Senha redefinida com sucesso!" };
   }
-
-  return { message: "Link de recuperação enviado!" };
-};
-
-export const resetPassword = async (
-  token: string,
-  password: string,
-  confirmPassword: string
-) => {
-  if (password !== confirmPassword) {
-    throw new Error("As senhas não coincidem!");
-  }
-
-  const passwordResetToken = crypto
-    .createHash("sha256")
-    .update(token)
-    .digest("hex");
-
-  const user = await prisma.user.findFirst({
-    where: {
-      passwordResetToken: passwordResetToken,
-      passwordResetExpires: { gte: new Date() },
-    },
-  });
-
-  if (!user) {
-    throw new Error("Token inválido ou expirado!");
-  }
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  await prisma.user.update({
-    where: { id: user.id },
-    data: {
-      password: hashedPassword,
-      passwordResetToken: null,
-      passwordResetExpires: null,
-    },
-  });
-
-  return { message: "Senha redefinida com sucesso!" };
-};
+}

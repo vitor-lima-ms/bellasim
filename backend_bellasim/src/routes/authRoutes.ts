@@ -1,19 +1,19 @@
 import { Router } from "express";
-import * as authController from "../controllers/authController";
+import { AuthController } from "../controllers/authController";
 import authMiddleware from "../middlewares/authMiddleware";
 
 const router = Router();
 
-router.post("/register", authMiddleware, authController.register);
+router.post("/register", authMiddleware, AuthController.register);
 
-router.post("/login", authController.login);
+router.post("/login", AuthController.login);
 
-router.get("/status", authMiddleware, authController.status);
+router.get("/status", authMiddleware, AuthController.status);
 
-router.post("/logout", authController.logout);
+router.post("/logout", AuthController.logout);
 
-router.post("/forgot-password", authController.forgotPassword);
+router.post("/forgot-password", AuthController.forgotPassword);
 
-router.put("/reset-password/:token", authController.resetPassword);
+router.put("/reset-password/:token", AuthController.resetPassword);
 
 export default router;
