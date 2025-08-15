@@ -49,7 +49,6 @@ export function Diaper(props: { modelProp: string }) {
   const [rawMaterialsWeights, setRawMaterialsWeight] = useState<
     Map<string, string>
   >(new Map());
-
   const [error, setError] = useState("");
 
   // Chamada para listagem de parâmetros constantes e matérias-primas
