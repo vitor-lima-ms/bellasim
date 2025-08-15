@@ -1,17 +1,17 @@
 import { Router } from "express";
-import * as commissionController from "../controllers/commissionController";
+import { CommissionController } from "../controllers/commissionController";
 import authMiddleware from "../middlewares/authMiddleware";
 
 const router = Router();
 
-router.post("/create", authMiddleware, commissionController.create);
+router.post("/create", authMiddleware, CommissionController.create);
 
-router.get("/read", authMiddleware, commissionController.read);
+router.get("/read", authMiddleware, CommissionController.read);
 
-router.get("/read/:id", authMiddleware, commissionController.readById);
+router.get("/read/:id", authMiddleware, CommissionController.readById);
 
-router.put("/update/:id", authMiddleware, commissionController.update);
+router.put("/update/:id", authMiddleware, CommissionController.update);
 
-router.delete("/delete/:id", authMiddleware, commissionController.deleteById);
+router.delete("/delete/:id", authMiddleware, CommissionController.deleteById);
 
 export default router;
