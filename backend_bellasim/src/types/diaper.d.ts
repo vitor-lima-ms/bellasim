@@ -7,6 +7,7 @@ export interface IDiaper {
   rawMaterials: IRawMaterial;
   rawMaterialsWeight: IRawMaterialWeight;
   costPerRawMaterial: ICostPerRawMaterial;
+  unitCost: string;
   packageQuantity: string;
   packagingCost: string;
   baleBagCost: string;
