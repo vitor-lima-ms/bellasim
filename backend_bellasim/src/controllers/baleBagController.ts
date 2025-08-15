@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { BaleBagService } from "../services/baleBagService";
 
 export class BaleBagController {
+  private constructor() {}
+
   static async create(req: Request, res: Response) {
     const description = req.body.description;
     const cost = req.body.cost;

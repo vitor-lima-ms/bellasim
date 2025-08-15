@@ -3,6 +3,8 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export class BaleBagService {
+  private constructor() {}
+
   static async create(description: string, cost: string) {
     const baleBag = await prisma.baleBag.create({
       data: {
