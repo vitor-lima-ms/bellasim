@@ -2,49 +2,49 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const create = async (description: string, percent: string) => {
-  const st = await prisma.sT.create({
-    data: {
-      description: description,
-      percent: percent,
-    },
-  });
+export class StService {
+  private constructor() {}
 
-  return st;
-};
+  static async create(description: string, percent: string) {
+    const st = await prisma.sT.create({
+      data: {
+        description: description,
+        percent: percent,
+      },
+    });
 
-export const read = async () => {
-  const sts = await prisma.sT.findMany({
-    orderBy: {
-      description: "asc",
-    },
-  });
+    return st;
+  }
 
-  return sts;
-};
+  static async read() {
+    const sts = await prisma.sT.findMany({
+      orderBy: {
+        description: "asc",
+      },
+    });
 
-export const readById = async (id: number) => {
-  const st = await prisma.sT.findUnique({ where: { id: id } });
+    return sts;
+  }
 
-  return st;
-};
+  static async readById(id: number) {
+    const st = await prisma.sT.findUnique({ where: { id: id } });
 
-export const update = async (
-  id: number,
-  description: string,
-  percent: string
-) => {
-  const updatedSt = await prisma.sT.update({
-    where: { id: id },
-    data: {
-      description: description,
-      percent: percent,
-    },
-  });
+    return st;
+  }
 
-  return updatedSt;
-};
+  static async update(id: number, description: string, percent: string) {
+    const updatedSt = await prisma.sT.update({
+      where: { id: id },
+      data: {
+        description: description,
+        percent: percent,
+      },
+    });
 
-export const deleteById = async (id: number) => {
-  await prisma.sT.delete({ where: { id: id } });
-};
+    return updatedSt;
+  }
+
+  static async deleteById(id: number) {
+    await prisma.sT.delete({ where: { id: id } });
+  }
+}

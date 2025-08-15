@@ -1,17 +1,17 @@
 import { Router } from "express";
-import * as stController from "../controllers/stController";
+import { StController } from "../controllers/stController";
 import authMiddleware from "../middlewares/authMiddleware";
 
 const router = Router();
 
-router.post("/create", authMiddleware, stController.create);
+router.post("/create", authMiddleware, StController.create);
 
-router.get("/read", authMiddleware, stController.read);
+router.get("/read", authMiddleware, StController.read);
 
-router.get("/read/:id", authMiddleware, stController.readById);
+router.get("/read/:id", authMiddleware, StController.readById);
 
-router.put("/update/:id", authMiddleware, stController.update);
+router.put("/update/:id", authMiddleware, StController.update);
 
-router.delete("/delete/:id", authMiddleware, stController.deleteById);
+router.delete("/delete/:id", authMiddleware, StController.deleteById);
 
 export default router;
