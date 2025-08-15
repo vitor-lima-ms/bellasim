@@ -99,8 +99,8 @@ model Diaper {
   id                        Int                @id @default(autoincrement())
   model                     String             @unique
   rawMaterials              RawMaterial[]
-  rawMaterialsWeight        Json[]
-  costPerRawMaterial        Json[]
+  rawMaterialsWeight        Json
+  costPerRawMaterial        Json
   unitCost                  String?
   packageQuantity           String
   Packaging                 Packaging          @relation(fields: [packagingCost], references: [cost])
