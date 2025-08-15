@@ -1,17 +1,17 @@
 import { Router } from "express";
-import * as rawMaterialController from "../controllers/rawMaterialController";
+import { RawMaterialController } from "../controllers/rawMaterialController";
 import authMiddleware from "../middlewares/authMiddleware";
 
 const router = Router();
 
-router.post("/create", authMiddleware, rawMaterialController.create);
+router.post("/create", authMiddleware, RawMaterialController.create);
 
-router.get("/read", authMiddleware, rawMaterialController.read);
+router.get("/read", authMiddleware, RawMaterialController.read);
 
-router.get("/read/:id", authMiddleware, rawMaterialController.readById);
+router.get("/read/:id", authMiddleware, RawMaterialController.readById);
 
-router.put("/update/:id", authMiddleware, rawMaterialController.update);
+router.put("/update/:id", authMiddleware, RawMaterialController.update);
 
-router.delete("/delete/:id", authMiddleware, rawMaterialController.deleteById);
+router.delete("/delete/:id", authMiddleware, RawMaterialController.deleteById);
 
 export default router;

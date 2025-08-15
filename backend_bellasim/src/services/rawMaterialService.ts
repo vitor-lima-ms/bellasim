@@ -2,54 +2,58 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const create = async (name: string, unit: string, unitCost: string) => {
-  const rawMaterial = await prisma.rawMaterial.create({
-    data: {
-      name: name,
-      unit: unit,
-      unitCost: unitCost,
-    },
-  });
+export class RawMaterialService {
+  private constructor() {}
 
-  return rawMaterial;
-};
+  static async create(name: string, unit: string, unitCost: string) {
+    const rawMaterial = await prisma.rawMaterial.create({
+      data: {
+        name: name,
+        unit: unit,
+        unitCost: unitCost,
+      },
+    });
 
-export const read = async () => {
-  const rawMaterials = await prisma.rawMaterial.findMany({
-    orderBy: {
-      name: "asc",
-    },
-  });
+    return rawMaterial;
+  }
 
-  return rawMaterials;
-};
+  static async read() {
+    const rawMaterials = await prisma.rawMaterial.findMany({
+      orderBy: {
+        name: "asc",
+      },
+    });
 
-export const readById = async (id: number) => {
-  const rawMaterial = await prisma.rawMaterial.findUnique({
-    where: { id: id },
-  });
+    return rawMaterials;
+  }
 
-  return rawMaterial;
-};
+  static async readById(id: number) {
+    const rawMaterial = await prisma.rawMaterial.findUnique({
+      where: { id: id },
+    });
 
-export const update = async (
-  id: number,
-  name: string,
-  unit: string,
-  unitCost: string
-) => {
-  const updatedRawMaterial = await prisma.rawMaterial.update({
-    where: { id: id },
-    data: {
-      name: name,
-      unit: unit,
-      unitCost: unitCost,
-    },
-  });
+    return rawMaterial;
+  }
 
-  return updatedRawMaterial;
-};
+  static async update(
+    id: number,
+    name: string,
+    unit: string,
+    unitCost: string
+  ) {
+    const updatedRawMaterial = await prisma.rawMaterial.update({
+      where: { id: id },
+      data: {
+        name: name,
+        unit: unit,
+        unitCost: unitCost,
+      },
+    });
 
-export const deleteById = async (id: number) => {
-  await prisma.rawMaterial.delete({ where: { id: id } });
-};
+    return updatedRawMaterial;
+  }
+
+  static async deleteById(id: number) {
+    await prisma.rawMaterial.delete({ where: { id: id } });
+  }
+}
