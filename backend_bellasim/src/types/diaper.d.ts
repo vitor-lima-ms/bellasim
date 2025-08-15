@@ -6,20 +6,20 @@ export interface IDiaper {
   rawMaterials: string[];
   rawMaterialsWeight: IRawMaterialWeight;
   costPerRawMaterial: ICostPerRawMaterial;
-  unitCost: string;
+  unitCost?: string;
   packageQuantity: string;
   packagingCost: string;
   baleBagCost: string;
-  diaperPackageCost: string;
-  diaperUnitCost: string;
+  diaperPackageCost?: string;
+  diaperUnitCost?: string;
   commissionPercent: string;
   taxesPercent: string;
   freightPercent: string;
   contributionMarginPercent: string;
   STPercent: string;
-  salePrice: string;
-  unitSalePrice: string;
-  salePriceWithST: string;
-  unitSalePriceWithST: string;
-  finalSalePrice: string;
+  salePrice?: string;
+  unitSalePrice?: string;
+  salePriceWithST?: string;
+  unitSalePriceWithST?: string;
+  finalSalePrice?: string;
 }
