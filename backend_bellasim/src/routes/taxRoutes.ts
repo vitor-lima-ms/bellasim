@@ -1,17 +1,17 @@
 import { Router } from "express";
-import * as taxController from "../controllers/taxController";
+import { TaxController } from "../controllers/taxController";
 import authMiddleware from "../middlewares/authMiddleware";
 
 const router = Router();
 
-router.post("/create", authMiddleware, taxController.create);
+router.post("/create", authMiddleware, TaxController.create);
 
-router.get("/read", authMiddleware, taxController.read);
+router.get("/read", authMiddleware, TaxController.read);
 
-router.get("/read/:id", authMiddleware, taxController.readById);
+router.get("/read/:id", authMiddleware, TaxController.readById);
 
-router.put("/update/:id", authMiddleware, taxController.update);
+router.put("/update/:id", authMiddleware, TaxController.update);
 
-router.delete("/delete/:id", authMiddleware, taxController.deleteById);
+router.delete("/delete/:id", authMiddleware, TaxController.deleteById);
 
 export default router;
