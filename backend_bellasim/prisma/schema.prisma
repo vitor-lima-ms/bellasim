@@ -101,13 +101,14 @@ model Diaper {
   rawMaterials              RawMaterial[]
   rawMaterialsWeight        Json[]
   costPerRawMaterial        Json[]
+  unitCost                  String?
   packageQuantity           String
   Packaging                 Packaging          @relation(fields: [packagingCost], references: [cost])
   packagingCost             String
   BaleBag                   BaleBag            @relation(fields: [baleBagCost], references: [cost])
   baleBagCost               String
-  diaperPackageCost         String
-  diaperUnitCost            String
+  diaperPackageCost         String?
+  diaperUnitCost            String?
   Commission                Commission         @relation(fields: [commissionPercent], references: [percent])
   commissionPercent         String
   Taxes                     Tax                @relation(fields: [taxesPercent], references: [percent])
