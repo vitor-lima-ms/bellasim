@@ -2,49 +2,49 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const create = async (description: string, percent: string) => {
-  const freight = await prisma.freight.create({
-    data: {
-      description: description,
-      percent: percent,
-    },
-  });
+export class FreightService {
+  private constructor() {}
 
-  return freight;
-};
+  static async create(description: string, percent: string) {
+    const freight = await prisma.freight.create({
+      data: {
+        description: description,
+        percent: percent,
+      },
+    });
 
-export const read = async () => {
-  const freights = await prisma.freight.findMany({
-    orderBy: {
-      description: "asc",
-    },
-  });
+    return freight;
+  }
 
-  return freights;
-};
+  static async read() {
+    const freights = await prisma.freight.findMany({
+      orderBy: {
+        description: "asc",
+      },
+    });
 
-export const readById = async (id: number) => {
-  const freight = await prisma.freight.findUnique({ where: { id: id } });
+    return freights;
+  }
 
-  return freight;
-};
+  static async readById(id: number) {
+    const freight = await prisma.freight.findUnique({ where: { id: id } });
 
-export const update = async (
-  id: number,
-  description: string,
-  percent: string
-) => {
-  const updatedFreight = await prisma.freight.update({
-    where: { id: id },
-    data: {
-      description: description,
-      percent: percent,
-    },
-  });
+    return freight;
+  }
 
-  return updatedFreight;
-};
+  static async update(id: number, description: string, percent: string) {
+    const updatedFreight = await prisma.freight.update({
+      where: { id: id },
+      data: {
+        description: description,
+        percent: percent,
+      },
+    });
 
-export const deleteById = async (id: number) => {
-  await prisma.freight.delete({ where: { id: id } });
-};
+    return updatedFreight;
+  }
+
+  static async deleteById(id: number) {
+    await prisma.freight.delete({ where: { id: id } });
+  }
+}

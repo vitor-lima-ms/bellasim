@@ -1,67 +1,71 @@
 import { Request, Response } from "express";
-import * as freightService from "../services/freightService";
+import { FreightService } from "../services/freightService";
 
-export const create = async (req: Request, res: Response) => {
-  const description = req.body.description;
-  const percent = req.body.percent;
+export class FreightController {
+  private constructor() {}
 
-  try {
-    const freight = await freightService.create(description, percent);
+  static async create(req: Request, res: Response) {
+    const description = req.body.description;
+    const percent = req.body.percent;
 
-    res.status(201).json({ freight });
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    try {
+      const freight = await FreightService.create(description, percent);
+
+      res.status(201).json({ freight });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
   }
-};
 
-export const read = async (req: Request, res: Response) => {
-  try {
-    const freights = await freightService.read();
+  static async read(req: Request, res: Response) {
+    try {
+      const freights = await FreightService.read();
 
-    res.status(200).json({ freights });
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
+      res.status(200).json({ freights });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
   }
-};
 
-export const readById = async (req: Request, res: Response) => {
-  const id = parseInt(req.params.id);
+  static async readById(req: Request, res: Response) {
+    const id = parseInt(req.params.id);
 
-  try {
-    const freight = await freightService.readById(id);
+    try {
+      const freight = await FreightService.readById(id);
 
-    res.status(200).json({ freight });
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
+      res.status(200).json({ freight });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
   }
-};
 
-export const update = async (req: Request, res: Response) => {
-  const id = parseInt(req.params.id);
-  const description = req.body.description;
-  const percent = req.body.percent;
+  static async update(req: Request, res: Response) {
+    const id = parseInt(req.params.id);
+    const description = req.body.description;
+    const percent = req.body.percent;
 
-  try {
-    const updatedFreight = await freightService.update(
-      id,
-      description,
-      percent
-    );
+    try {
+      const updatedFreight = await FreightService.update(
+        id,
+        description,
+        percent
+      );
 
-    res.status(200).json({ updatedFreight });
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
+      res.status(200).json({ updatedFreight });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
   }
-};
 
-export const deleteById = async (req: Request, res: Response) => {
-  const id = parseInt(req.params.id);
+  static async deleteById(req: Request, res: Response) {
+    const id = parseInt(req.params.id);
 
-  try {
-    await freightService.deleteById(id);
+    try {
+      await FreightService.deleteById(id);
 
-    res.status(200).json({ message: "Deletado com sucesso!" });
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
+      res.status(200).json({ message: "Deletado com sucesso!" });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
   }
-};
+}
