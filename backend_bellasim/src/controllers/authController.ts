@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { AuthService } from "../services/authService";
 
 export class AuthController {
+  private constructor() {}
+
   static status(req: Request, res: Response) {
     res.status(200).json({ message: "Usuário autenticado!" });
   }

@@ -7,6 +7,8 @@ import { sendMail } from "../utils/sendMailUtil";
 const prisma = new PrismaClient();
 
 export class AuthService {
+  private constructor() {}
+
   static async register(
     name: string,
     email: string,
