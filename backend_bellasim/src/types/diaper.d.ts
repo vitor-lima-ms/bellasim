@@ -1,4 +1,3 @@
-import { IRawMaterial } from "./rawMaterial";
 import { IRawMaterialWeight } from "./rawMaterialWeight";
 import { ICostPerRawMaterial } from "./costPerRawMaterial";
 
