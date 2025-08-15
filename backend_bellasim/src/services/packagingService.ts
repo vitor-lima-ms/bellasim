@@ -2,45 +2,49 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const create = async (description: string, cost: string) => {
-  const packaging = await prisma.packaging.create({
-    data: {
-      description: description,
-      cost: cost,
-    },
-  });
+export class PackagingService {
+  private constructor() {}
 
-  return packaging;
-};
+  static async create(description: string, cost: string) {
+    const packaging = await prisma.packaging.create({
+      data: {
+        description: description,
+        cost: cost,
+      },
+    });
 
-export const read = async () => {
-  const packagings = await prisma.packaging.findMany({
-    orderBy: {
-      description: "asc",
-    },
-  });
+    return packaging;
+  }
 
-  return packagings;
-};
+  static async read() {
+    const packagings = await prisma.packaging.findMany({
+      orderBy: {
+        description: "asc",
+      },
+    });
 
-export const readById = async (id: number) => {
-  const packaging = await prisma.packaging.findUnique({ where: { id: id } });
+    return packagings;
+  }
 
-  return packaging;
-};
+  static async readById(id: number) {
+    const packaging = await prisma.packaging.findUnique({ where: { id: id } });
 
-export const update = async (id: number, description: string, cost: string) => {
-  const updatedPackaging = await prisma.packaging.update({
-    where: { id: id },
-    data: {
-      description: description,
-      cost: cost,
-    },
-  });
+    return packaging;
+  }
 
-  return updatedPackaging;
-};
+  static async update(id: number, description: string, cost: string) {
+    const updatedPackaging = await prisma.packaging.update({
+      where: { id: id },
+      data: {
+        description: description,
+        cost: cost,
+      },
+    });
 
-export const deleteById = async (id: number) => {
-  await prisma.packaging.delete({ where: { id: id } });
-};
+    return updatedPackaging;
+  }
+
+  static async deleteById(id: number) {
+    await prisma.packaging.delete({ where: { id: id } });
+  }
+}
