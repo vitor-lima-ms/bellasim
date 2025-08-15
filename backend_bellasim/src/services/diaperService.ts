@@ -47,5 +47,7 @@ export class DiaperService {
         model: diaper.model,
       },
     });
+
+    return updatedOrCreatedDiaper;
   }
 }
