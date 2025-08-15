@@ -4,7 +4,7 @@ import { ICostPerRawMaterial } from "./costPerRawMaterial";
 
 export interface IDiaper {
   model: string;
-  rawMaterials: IRawMaterial[];
+  rawMaterials: string[];
   rawMaterialsWeight: IRawMaterialWeight;
   costPerRawMaterial: ICostPerRawMaterial;
   unitCost: string;
