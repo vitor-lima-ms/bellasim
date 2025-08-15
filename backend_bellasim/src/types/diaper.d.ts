@@ -3,7 +3,6 @@ import { IRawMaterialWeight } from "./rawMaterialWeight";
 import { ICostPerRawMaterial } from "./costPerRawMaterial";
 
 export interface IDiaper {
-  id: number;
   model: string;
   rawMaterials: IRawMaterial;
   rawMaterialsWeight: IRawMaterialWeight;
