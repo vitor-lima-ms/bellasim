@@ -1,21 +1,21 @@
 import { Router } from "express";
-import * as contributionMarginController from "../controllers/contributionMarginController";
+import { ContributionMarginController } from "../controllers/contributionMarginController";
 import authMiddleware from "../middlewares/authMiddleware";
 
 const router = Router();
 
-router.post("/create", authMiddleware, contributionMarginController.create);
+router.post("/create", authMiddleware, ContributionMarginController.create);
 
-router.get("/read", authMiddleware, contributionMarginController.read);
+router.get("/read", authMiddleware, ContributionMarginController.read);
 
-router.get("/read/:id", authMiddleware, contributionMarginController.readById);
+router.get("/read/:id", authMiddleware, ContributionMarginController.readById);
 
-router.put("/update/:id", authMiddleware, contributionMarginController.update);
+router.put("/update/:id", authMiddleware, ContributionMarginController.update);
 
 router.delete(
   "/delete/:id",
   authMiddleware,
-  contributionMarginController.deleteById
+  ContributionMarginController.deleteById
 );
 
 export default router;
