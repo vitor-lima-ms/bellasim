@@ -98,7 +98,8 @@ model ST {
 model Diaper {
   id                        Int                @id @default(autoincrement())
   model                     String             @unique
-  rawMaterials              RawMaterial[]
+  RawMaterial               RawMaterial[]
+  rawMaterials              String[]
   rawMaterialsWeight        Json
   costPerRawMaterial        Json
   unitCost                  String?
