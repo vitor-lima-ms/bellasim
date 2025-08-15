@@ -13,7 +13,7 @@ interface IConstantParameter {
   percent?: string;
 }
 
-interface IRawMaterialFromAPI {
+interface IRawMaterial {
   id: number;
   name: string;
   unit: string;
@@ -34,7 +34,7 @@ export function Diaper(props: { modelProp: string }) {
   const [taxes, setTaxes] = useState<IConstantParameter[]>([]);
   // Variável para armazenar as matérias-primas
   const [rawMaterialsList, setRawMaterialsList] = useState<
-    IRawMaterialFromAPI[]
+    IRawMaterial[]
   >([]);
   // Variáveis para serem enviadas para a API
   const model = props.modelProp;
