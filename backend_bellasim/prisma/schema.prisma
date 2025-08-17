@@ -112,8 +112,8 @@ model Diaper {
   diaperUnitCost            String?
   Commission                Commission         @relation(fields: [commissionPercent], references: [percent])
   commissionPercent         String
-  Taxes                     Tax                @relation(fields: [taxesPercent], references: [percent])
-  taxesPercent              String
+  Tax                       Tax                @relation(fields: [taxPercent], references: [percent])
+  taxPercent                String
   Freight                   Freight            @relation(fields: [freightPercent], references: [percent])
   freightPercent            String
   ContributionMargin        ContributionMargin @relation(fields: [contributionMarginPercent], references: [percent])
