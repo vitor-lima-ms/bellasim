@@ -33,9 +33,7 @@ export function Diaper(props: { modelProp: string }) {
   const [sts, setSts] = useState<IConstantParameter[]>([]);
   const [taxes, setTaxes] = useState<IConstantParameter[]>([]);
   // Variável para armazenar as matérias-primas
-  const [rawMaterialsList, setRawMaterialsList] = useState<
-    IRawMaterial[]
-  >([]);
+  const [rawMaterialsList, setRawMaterialsList] = useState<IRawMaterial[]>([]);
   // Variáveis para serem enviadas para a API
   const model = props.modelProp;
   const [baleBagCost, setBaleBagCost] = useState("");
@@ -191,20 +189,18 @@ export function Diaper(props: { modelProp: string }) {
 
     const rawMaterialsWeightsJSON = Object.fromEntries(rawMaterialsWeights);
 
-    const formData = {
-      model,
-      packageQuantity,
-      packagingCost,
-      baleBagCost,
-      commissionPercent,
-      taxPercent,
-      freightPercent,
-      contributionMarginPercent,
-      stPercent,
-      rawMaterialsWeightsJSON,
-    };
-
-    console.log("Dados a serem enviados:", formData);
+    apiClient.post(`${API_URL}/diaper/create-or-update`, {
+      model: model,
+      packageQuantity: packageQuantity,
+      packagingCost: packagingCost,
+      baleBagCost: baleBagCost,
+      commissionPercent: commissionPercent,
+      taxPercent: taxPercent,
+      freightPercent: freightPercent,
+      contributionMarginPercent: contributionMarginPercent,
+      stPercent: stPercent,
+      rawMaterialsWeightsJSON: rawMaterialsWeightsJSON,
+    });
   };
 
   return (
