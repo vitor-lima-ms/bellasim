@@ -23,12 +23,14 @@ export class DiaperService {
       for (const rawMaterialInDiaper of rawMaterialsInDiaper) {
         if (rawMaterialFromDB.name === rawMaterialInDiaper) {
           costPerRawMaterial[rawMaterialInDiaper] = String(
-            parseFloat(rawMaterialFromDB.unitCost) *
+            (
+              parseFloat(rawMaterialFromDB.unitCost) *
               parseFloat(
                 rawMaterialsWeight[
                   rawMaterialInDiaper as keyof typeof rawMaterialsWeight
                 ]
               )
+            ).toFixed(4)
           );
         }
       }
@@ -55,7 +57,8 @@ export class DiaperService {
       (1 -
         parseFloat(diaperFromFrontend.commissionPercent) / 100 -
         parseFloat(diaperFromFrontend.taxPercent) / 100 -
-        parseFloat(diaperFromFrontend.freightPercent) / 100);
+        parseFloat(diaperFromFrontend.freightPercent) / 100 -
+        parseFloat(diaperFromFrontend.contributionMarginPercent) / 100);
     // unitSalePrice
     const unitSalePrice = (
       salePrice / parseFloat(diaperFromFrontend.packageQuantity)
@@ -82,26 +85,30 @@ export class DiaperService {
         freightPercent: diaperFromFrontend.freightPercent,
         contributionMarginPercent: diaperFromFrontend.contributionMarginPercent,
         STPercent: diaperFromFrontend.STPercent,
+        salePrice: String(salePrice.toFixed(3)),
+        unitSalePrice: String(Number(unitSalePrice).toFixed(2)),
+        salePriceWithST: String(salePriceWithST.toFixed(3)),
+        unitSalePriceWithST: String(Number(unitSalePriceWithST).toFixed(2)),
       },
       update: {
         rawMaterials: rawMaterialsInDiaper,
         rawMaterialsWeight: diaperFromFrontend.rawMaterialsWeightsJSON,
         costPerRawMaterial: costPerRawMaterial,
-        unitCost: String(unitCost),
+        unitCost: String(unitCost.toFixed(4)),
         packageQuantity: diaperFromFrontend.packageQuantity,
         packagingCost: diaperFromFrontend.packagingCost,
         baleBagCost: diaperFromFrontend.baleBagCost,
-        diaperPackageCost: String(diaperPackageCost),
-        diaperUnitCost: String(diaperUnitCost),
+        diaperPackageCost: String(diaperPackageCost.toFixed(3)),
+        diaperUnitCost: String(diaperUnitCost.toFixed(3)),
         commissionPercent: diaperFromFrontend.commissionPercent,
         taxPercent: diaperFromFrontend.taxPercent,
         freightPercent: diaperFromFrontend.freightPercent,
         contributionMarginPercent: diaperFromFrontend.contributionMarginPercent,
         STPercent: diaperFromFrontend.STPercent,
-        salePrice: String(salePrice),
-        unitSalePrice: unitSalePrice,
-        salePriceWithST: String(salePriceWithST),
-        unitSalePriceWithST: unitSalePriceWithST,
+        salePrice: String(salePrice.toFixed(3)),
+        unitSalePrice: String(Number(unitSalePrice).toFixed(2)),
+        salePriceWithST: String(salePriceWithST.toFixed(3)),
+        unitSalePriceWithST: String(Number(unitSalePriceWithST).toFixed(2)),
       },
       where: {
         model: diaperFromFrontend.model,
