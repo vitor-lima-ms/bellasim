@@ -115,8 +115,6 @@ export class DiaperService {
       },
     });
 
-    console.log(updatedOrCreatedDiaper);
-
     return updatedOrCreatedDiaper;
   }
 }
