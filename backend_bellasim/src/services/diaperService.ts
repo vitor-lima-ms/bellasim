@@ -1,4 +1,5 @@
-import { IDiaper } from "../types/diaper";
+import { IDiaperFromFrontend } from "../types/diaperFromFrontend";
+import { ICostPerRawMaterial } from "../types/costPerRawMaterial";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -6,47 +7,108 @@ const prisma = new PrismaClient();
 export class DiaperService {
   private constructor() {}
 
-  static async createOrUpdate(diaper: IDiaper) {
+  static async createOrUpdate(diaperFromFrontend: IDiaperFromFrontend) {
+    // rawMaterialsWeight
+    const rawMaterialsWeight = diaperFromFrontend.rawMaterialsWeightsJSON;
+    // rawMaterials
+    const rawMaterialsInDiaper = Object.keys(
+      diaperFromFrontend.rawMaterialsWeightsJSON
+    );
+    // costPerRawMaterial
+    let costPerRawMaterial: ICostPerRawMaterial = {};
+
+    const rawMaterialsFromDB = await prisma.rawMaterial.findMany();
+
+    rawMaterialsFromDB.forEach((rawMaterialFromDB) => {
+      for (const rawMaterialInDiaper of rawMaterialsInDiaper) {
+        if (rawMaterialFromDB.name === rawMaterialInDiaper) {
+          costPerRawMaterial[rawMaterialInDiaper] = String(
+            parseFloat(rawMaterialFromDB.unitCost) *
+              parseFloat(
+                rawMaterialsWeight[
+                  rawMaterialInDiaper as keyof typeof rawMaterialsWeight
+                ]
+              )
+          );
+        }
+      }
+    });
+    // unitCost
+    let unitCost = 0;
+
+    for (const cost of Object.values(costPerRawMaterial)) {
+      unitCost += parseFloat(cost);
+    }
+
+    unitCost *= 1.04; // Estimativa de perdas
+    // diaperPackageCost
+    const diaperPackageCost =
+      unitCost * parseFloat(diaperFromFrontend.packageQuantity) +
+      parseFloat(diaperFromFrontend.packagingCost) +
+      parseFloat(diaperFromFrontend.baleBagCost);
+    // diaperUnitCost
+    const diaperUnitCost =
+      diaperPackageCost / parseFloat(diaperFromFrontend.packageQuantity);
+    // salePrice
+    const salePrice =
+      diaperPackageCost /
+      (1 -
+        parseFloat(diaperFromFrontend.commissionPercent) / 100 -
+        parseFloat(diaperFromFrontend.taxPercent) / 100 -
+        parseFloat(diaperFromFrontend.freightPercent) / 100);
+    // unitSalePrice
+    const unitSalePrice = (
+      salePrice / parseFloat(diaperFromFrontend.packageQuantity)
+    ).toFixed(2);
+    // salePriceWithST
+    const salePriceWithST =
+      salePrice * (1 + parseFloat(diaperFromFrontend.STPercent) / 100);
+    // unitSalePriceWithST
+    const unitSalePriceWithST = (
+      salePriceWithST / parseFloat(diaperFromFrontend.packageQuantity)
+    ).toFixed(2);
+
     const updatedOrCreatedDiaper = await prisma.diaper.upsert({
       create: {
-        model: diaper.model,
-        rawMaterials: diaper.rawMaterials,
-        rawMaterialsWeight: diaper.rawMaterialsWeight,
-        costPerRawMaterial: diaper.costPerRawMaterial,
-        packageQuantity: diaper.packageQuantity,
-        packagingCost: diaper.packagingCost,
-        baleBagCost: diaper.baleBagCost,
-        commissionPercent: diaper.commissionPercent,
-        taxesPercent: diaper.taxesPercent,
-        freightPercent: diaper.freightPercent,
-        contributionMarginPercent: diaper.contributionMarginPercent,
-        STPercent: diaper.STPercent,
+        model: diaperFromFrontend.model,
+        rawMaterials: rawMaterialsInDiaper,
+        rawMaterialsWeight: rawMaterialsWeight,
+        costPerRawMaterial: costPerRawMaterial,
+        packageQuantity: diaperFromFrontend.packageQuantity,
+        packagingCost: diaperFromFrontend.packagingCost,
+        baleBagCost: diaperFromFrontend.baleBagCost,
+        commissionPercent: diaperFromFrontend.commissionPercent,
+        taxPercent: diaperFromFrontend.taxPercent,
+        freightPercent: diaperFromFrontend.freightPercent,
+        contributionMarginPercent: diaperFromFrontend.contributionMarginPercent,
+        STPercent: diaperFromFrontend.STPercent,
       },
       update: {
-        rawMaterials: diaper.rawMaterials,
-        rawMaterialsWeight: diaper.rawMaterialsWeight,
-        costPerRawMaterial: diaper.costPerRawMaterial,
-        unitCost: diaper.unitCost,
-        packageQuantity: diaper.packageQuantity,
-        packagingCost: diaper.packagingCost,
-        baleBagCost: diaper.baleBagCost,
-        diaperPackageCost: diaper.diaperPackageCost,
-        diaperUnitCost: diaper.diaperUnitCost,
-        commissionPercent: diaper.commissionPercent,
-        taxesPercent: diaper.taxesPercent,
-        freightPercent: diaper.freightPercent,
-        contributionMarginPercent: diaper.contributionMarginPercent,
-        STPercent: diaper.STPercent,
-        salePrice: diaper.salePrice,
-        unitSalePrice: diaper.unitSalePrice,
-        salePriceWithST: diaper.salePriceWithST,
-        unitSalePriceWithST: diaper.unitSalePriceWithST,
-        finalSalePrice: diaper.finalSalePrice,
+        rawMaterials: rawMaterialsInDiaper,
+        rawMaterialsWeight: diaperFromFrontend.rawMaterialsWeightsJSON,
+        costPerRawMaterial: costPerRawMaterial,
+        unitCost: String(unitCost),
+        packageQuantity: diaperFromFrontend.packageQuantity,
+        packagingCost: diaperFromFrontend.packagingCost,
+        baleBagCost: diaperFromFrontend.baleBagCost,
+        diaperPackageCost: String(diaperPackageCost),
+        diaperUnitCost: String(diaperUnitCost),
+        commissionPercent: diaperFromFrontend.commissionPercent,
+        taxPercent: diaperFromFrontend.taxPercent,
+        freightPercent: diaperFromFrontend.freightPercent,
+        contributionMarginPercent: diaperFromFrontend.contributionMarginPercent,
+        STPercent: diaperFromFrontend.STPercent,
+        salePrice: String(salePrice),
+        unitSalePrice: unitSalePrice,
+        salePriceWithST: String(salePriceWithST),
+        unitSalePriceWithST: unitSalePriceWithST,
       },
       where: {
-        model: diaper.model,
+        model: diaperFromFrontend.model,
       },
     });
+
+    console.log(updatedOrCreatedDiaper);
 
     return updatedOrCreatedDiaper;
   }
