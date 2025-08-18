@@ -34,7 +34,7 @@ export function Diaper(props: { modelProp: string }) {
   const [taxes, setTaxes] = useState<IConstantParameter[]>([]);
   // Variável para armazenar as matérias-primas vindas da API
   const [rawMaterialsList, setRawMaterialsList] = useState<IRawMaterial[]>([]);
-  // Variáveis para preencherem os campos e serem enviadas para a API
+  // Variáveis para preencher os campos e serem enviadas para a API
   const model = props.modelProp;
   const [size, setSize] = useState("");
   const [baleBagCost, setBaleBagCost] = useState("");
@@ -192,16 +192,31 @@ export function Diaper(props: { modelProp: string }) {
           { model: model, size: size }
         );
 
-        setPackageQuantity(response.data.diaper.packageQuantity);
-        setPackagingCost(response.data.diaper.packagingCost);
-        setBaleBagCost(response.data.diaper.baleBagCost);
-        setCommissionPercent(response.data.diaper.commissionPercent);
-        setTaxPercent(response.data.diaper.taxPercent);
-        setFreightPercent(response.data.diaper.freightPercent);
-        setContributionMarginPercent(
-          response.data.diaper.contributionMarginPercent
-        );
-        setStPercent(response.data.diaper.STPercent);
+        if (response.data.diaper) {
+          setPackageQuantity(response.data.diaper.packageQuantity);
+          setPackagingCost(response.data.diaper.packagingCost);
+          setBaleBagCost(response.data.diaper.baleBagCost);
+          setCommissionPercent(response.data.diaper.commissionPercent);
+          setTaxPercent(response.data.diaper.taxPercent);
+          setFreightPercent(response.data.diaper.freightPercent);
+          setContributionMarginPercent(
+            response.data.diaper.contributionMarginPercent
+          );
+          setStPercent(response.data.diaper.STPercent);
+          setRawMaterialsWeight(
+            new Map(Object.entries(response.data.diaper.rawMaterialsWeight))
+          );
+        } else {
+          setPackageQuantity("");
+          setPackagingCost("");
+          setBaleBagCost("");
+          setCommissionPercent("");
+          setTaxPercent("");
+          setFreightPercent("");
+          setContributionMarginPercent("");
+          setStPercent("");
+          setRawMaterialsWeight(new Map());
+        }
       } catch (error: unknown) {
         if (error instanceof Error) {
           setError(error.message);
@@ -220,7 +235,6 @@ export function Diaper(props: { modelProp: string }) {
     setError("");
 
     const rawMaterialsWeightsJSON = Object.fromEntries(rawMaterialsWeights);
-
     apiClient.post(`${API_URL}/diaper/create-or-update`, {
       model: model,
       size: size,
@@ -299,6 +313,7 @@ export function Diaper(props: { modelProp: string }) {
                           step="0.0001"
                           min={0}
                           placeholder="Quantidade"
+                          value={rawMaterialsWeights.get(rawMaterial.name)}
                           onChange={(event) => {
                             setRawMaterialsWeight(
                               rawMaterialsWeights.set(
