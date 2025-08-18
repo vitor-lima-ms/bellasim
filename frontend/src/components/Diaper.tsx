@@ -21,7 +21,7 @@ interface IRawMaterial {
 }
 
 export function Diaper(props: { modelProp: string }) {
-  // Variáveis para armazenar as listas de parâmetros constantes
+  // Variáveis para armazenar as listas de parâmetros constantes vindas da API
   const [packageQuantity, setPackageQuantity] = useState("");
   const [baleBags, setBaleBags] = useState<IConstantParameter[]>([]);
   const [commissions, setCommissions] = useState<IConstantParameter[]>([]);
@@ -32,10 +32,11 @@ export function Diaper(props: { modelProp: string }) {
   const [packagings, setPackagings] = useState<IConstantParameter[]>([]);
   const [sts, setSts] = useState<IConstantParameter[]>([]);
   const [taxes, setTaxes] = useState<IConstantParameter[]>([]);
-  // Variável para armazenar as matérias-primas
+  // Variável para armazenar as matérias-primas vindas da API
   const [rawMaterialsList, setRawMaterialsList] = useState<IRawMaterial[]>([]);
   // Variáveis para serem enviadas para a API
   const model = props.modelProp;
+  const [size, setSize] = useState("");
   const [baleBagCost, setBaleBagCost] = useState("");
   const [commissionPercent, setCommissionPercent] = useState("");
   const [contributionMarginPercent, setContributionMarginPercent] =
@@ -191,6 +192,7 @@ export function Diaper(props: { modelProp: string }) {
 
     apiClient.post(`${API_URL}/diaper/create-or-update`, {
       model: model,
+      size: size,
       packageQuantity: packageQuantity,
       packagingCost: packagingCost,
       baleBagCost: baleBagCost,
@@ -214,13 +216,30 @@ export function Diaper(props: { modelProp: string }) {
             {error && <Alert variant="danger">{error}</Alert>}
             <Form onSubmit={handleSubmit}>
               <Row>
-                <Col md={6}>
+                <Col md={4}>
                   <Form.Group className="mb-3" controlId="formDiaperModel">
                     <Form.Label>Modelo</Form.Label>
                     <Form.Control type="text" value={model} readOnly required />
                   </Form.Group>
                 </Col>
-                <Col md={6}>
+                <Col md={4}>
+                  <Form.Group className="mb-3" controlId="formPackageQuantity">
+                    <Form.Label>Tamanho</Form.Label>
+                    <Form.Select
+                      value={size}
+                      onChange={(event) => setSize(event.target.value)}
+                      required
+                    >
+                      <option value="" disabled>
+                        ...
+                      </option>
+                      <option value="XG">XG</option>
+                      <option value="G">G</option>
+                      <option value="M">M</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+                <Col md={4}>
                   <Form.Group className="mb-3" controlId="formPackageQuantity">
                     <Form.Label>Quantidade por pacote</Form.Label>
                     <Form.Control
