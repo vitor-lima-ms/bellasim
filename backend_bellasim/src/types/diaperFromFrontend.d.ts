@@ -3,6 +3,7 @@ import { ICostPerRawMaterial } from "./costPerRawMaterial";
 
 export interface IDiaperFromFrontend {
   model: string;
+  size: string;
   packageQuantity: string;
   packagingCost: string;
   baleBagCost: string;
