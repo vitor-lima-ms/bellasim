@@ -315,12 +315,11 @@ export function Diaper(props: { modelProp: string }) {
                           placeholder="Quantidade"
                           value={rawMaterialsWeights.get(rawMaterial.name)}
                           onChange={(event) => {
-                            setRawMaterialsWeight(
-                              rawMaterialsWeights.set(
-                                rawMaterial.name,
-                                event.target.value
-                              )
-                            );
+                            const newMap = new Map(rawMaterialsWeights);
+
+                            newMap.set(rawMaterial.name, event.target.value);
+
+                            setRawMaterialsWeight(newMap);
                           }}
                         />
                       </>
