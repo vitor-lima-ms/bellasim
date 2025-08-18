@@ -8,6 +8,8 @@ export class DiaperService {
   private constructor() {}
 
   static async createOrUpdate(diaperFromFrontend: IDiaperFromFrontend) {
+    // modelSize
+    const modelSize = `${diaperFromFrontend.model}_${diaperFromFrontend.size}`;
     // rawMaterialsWeight
     const rawMaterialsWeight = diaperFromFrontend.rawMaterialsWeightsJSON;
     // rawMaterials
@@ -74,6 +76,8 @@ export class DiaperService {
     const updatedOrCreatedDiaper = await prisma.diaper.upsert({
       create: {
         model: diaperFromFrontend.model,
+        size: diaperFromFrontend.size,
+        modelSize: modelSize,
         rawMaterials: rawMaterialsInDiaper,
         rawMaterialsWeight: rawMaterialsWeight,
         costPerRawMaterial: costPerRawMaterial,
@@ -111,7 +115,7 @@ export class DiaperService {
         unitSalePriceWithST: String(Number(unitSalePriceWithST).toFixed(2)),
       },
       where: {
-        model: diaperFromFrontend.model,
+        modelSize: modelSize,
       },
     });
 

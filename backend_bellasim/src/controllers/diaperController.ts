@@ -8,6 +8,7 @@ export class DiaperController {
   static async createOrUpdate(req: Request, res: Response) {
     const diaperFromFrontend: IDiaperFromFrontend = {
       model: req.body.model,
+      size: req.body.size,
       packageQuantity: req.body.packageQuantity,
       packagingCost: req.body.packagingCost,
       baleBagCost: req.body.baleBagCost,
