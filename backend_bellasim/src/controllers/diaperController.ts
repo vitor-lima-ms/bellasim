@@ -29,4 +29,17 @@ export class DiaperController {
       res.status(500).json({ message: error.message });
     }
   }
+
+  static async readByModelSize(req: Request, res: Response) {
+    const model = req.body.model;
+    const size = req.body.size;
+
+    try {
+      const diaper = await DiaperService.readByModelSize(model, size);
+
+      res.status(200).json({ diaper });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  }
 }

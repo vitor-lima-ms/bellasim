@@ -34,7 +34,7 @@ export function Diaper(props: { modelProp: string }) {
   const [taxes, setTaxes] = useState<IConstantParameter[]>([]);
   // Variável para armazenar as matérias-primas vindas da API
   const [rawMaterialsList, setRawMaterialsList] = useState<IRawMaterial[]>([]);
-  // Variáveis para serem enviadas para a API
+  // Variáveis para preencherem os campos e serem enviadas para a API
   const model = props.modelProp;
   const [size, setSize] = useState("");
   const [baleBagCost, setBaleBagCost] = useState("");
@@ -182,6 +182,37 @@ export function Diaper(props: { modelProp: string }) {
 
     fetchRawMaterials();
   }, []);
+
+  // Chamada para preencher os campos do formulário
+  useEffect(() => {
+    const fetchDiaper = async () => {
+      try {
+        const response = await apiClient.post(
+          `${API_URL}/diaper/read-by-model-size`,
+          { model: model, size: size }
+        );
+
+        setPackageQuantity(response.data.diaper.packageQuantity);
+        setPackagingCost(response.data.diaper.packagingCost);
+        setBaleBagCost(response.data.diaper.baleBagCost);
+        setCommissionPercent(response.data.diaper.commissionPercent);
+        setTaxPercent(response.data.diaper.taxPercent);
+        setFreightPercent(response.data.diaper.freightPercent);
+        setContributionMarginPercent(
+          response.data.diaper.contributionMarginPercent
+        );
+        setStPercent(response.data.diaper.STPercent);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError("Um erro desconhecido aconteceu!");
+        }
+      }
+    };
+
+    fetchDiaper();
+  }, [model, size]);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();

@@ -10,4 +10,10 @@ router.post(
   DiaperController.createOrUpdate
 );
 
+router.post(
+  "/read-by-model-size",
+  authMiddleware,
+  DiaperController.readByModelSize
+);
+
 export default router;

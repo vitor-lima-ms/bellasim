@@ -124,4 +124,14 @@ export class DiaperService {
 
     return updatedOrCreatedDiaper;
   }
+
+  static async readByModelSize(model: string, size: string) {
+    const modelSize = `${model}_${size}`;
+
+    const diaper = await prisma.diaper.findUnique({
+      where: { modelSize: modelSize },
+    });
+
+    return diaper;
+  }
 }
