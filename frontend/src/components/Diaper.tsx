@@ -1,5 +1,14 @@
 import { useState, useEffect, type FormEvent } from "react";
-import { Card, Form, Button, Row, Col, Alert } from "react-bootstrap";
+import {
+  Card,
+  Form,
+  Button,
+  Row,
+  Col,
+  Alert,
+  ListGroup,
+  Badge,
+} from "react-bootstrap";
 import axios from "axios";
 
 const API_URL = "/api";
@@ -520,47 +529,53 @@ export function Diaper(props: { modelProp: string }) {
           </Card.Body>
         </Col>
         <Col md={6}>
-          <Form.Group className="mt-3 mb-3" controlId="formRawMaterials">
-            <Form.Label>Custo por matéria-prima</Form.Label>
-            <Card>
-              <Card.Body style={{ maxHeight: "200px", overflowY: "auto" }}>
-                {costPerRawMaterial.map((rawMaterial) => (
-                  <>
-                    <Form.Label>{rawMaterial[0]}</Form.Label>
-                    <Form.Control
-                      className="mb-3"
-                      readOnly
-                      value={rawMaterial[1]}
-                    />
-                  </>
+          <div style={{ padding: "16px" }}>
+            <h4>Resultados da simulação</h4>
+
+            <div>
+              <label className="form-label">Custo por matéria-prima</label>
+              <ListGroup variant="flush" className="border rounded mb-4">
+                {costPerRawMaterial.map((rawMaterial, index) => (
+                  <ListGroup.Item
+                    key={index}
+                    className="d-flex justify-content-between align-items-center"
+                  >
+                    <span>{rawMaterial[0]}</span>
+                    <Badge bg="secondary">R$ {rawMaterial[1]}</Badge>
+                  </ListGroup.Item>
                 ))}
-              </Card.Body>
-            </Card>
-          </Form.Group>
+              </ListGroup>
+            </div>
 
-          <Form.Group className="mb-3" controlId="formSalePrice">
-            <Form.Label>Preço de venda</Form.Label>
-            <Form.Control className="mb-3" readOnly value={salePrice} />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formUnitSalePrice">
-            <Form.Label>Preço de venda por fralda</Form.Label>
-            <Form.Control className="mb-3" readOnly value={unitSalePrice} />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formSalePriceWithST">
-            <Form.Label>Preço de venda (com ST)</Form.Label>
-            <Form.Control className="mb-3" readOnly value={salePriceWithST} />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formUnitSalePriceWIthST">
-            <Form.Label>Preço de venda por fralda (com ST)</Form.Label>
-            <Form.Control
-              className="mb-3"
-              readOnly
-              value={unitSalePriceWithST}
-            />
-          </Form.Group>
+            <div className="mt-auto">
+              <Row>
+                <Col sm={6}>
+                  <Alert variant="light" className="text-center p-2">
+                    <span className="d-block small">Preço de venda</span>
+                    <strong className="d-block fs-4">
+                      R$ {salePrice || "0,00"}
+                    </strong>
+                    <small className="text-muted">
+                      R$ {unitSalePrice || "0,00"} / fralda
+                    </small>
+                  </Alert>
+                </Col>
+                <Col sm={6}>
+                  <Alert variant="info" className="text-center p-2">
+                    <span className="d-block small">
+                      Preço de venda (com ST)
+                    </span>
+                    <strong className="d-block fs-4">
+                      R$ {salePriceWithST || "0,00"}
+                    </strong>
+                    <small className="text-muted">
+                      R$ {unitSalePriceWithST || "0,00"} / fralda
+                    </small>
+                  </Alert>
+                </Col>
+              </Row>
+            </div>
+          </div>
         </Col>
       </Row>
     </Card>
