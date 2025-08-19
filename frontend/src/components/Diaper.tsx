@@ -58,6 +58,9 @@ export function Diaper(props: { modelProp: string }) {
     Map<string, string>
   >(new Map());
   const [costPerRawMaterial, setCostPerRawMaterial] = useState<string[][]>([]);
+  const [unitCost, setUnitCost] = useState("");
+  const [diaperPackageCost, setDiaperPackageCost] = useState("");
+  const [diaperUnitCost, setDiaperUnitCost] = useState("");
   const [salePrice, setSalePrice] = useState("");
   const [unitSalePrice, setUnitSalePrice] = useState("");
   const [salePriceWithST, setSalePriceWithST] = useState("");
@@ -203,7 +206,7 @@ export function Diaper(props: { modelProp: string }) {
     fetchRawMaterials();
   }, []);
 
-  // Chamada para preencher os campos do formulário (editáveis e não editáveis)
+  // Chamada para preencher os campos do formulário
   useEffect(() => {
     const fetchDiaper = async () => {
       try {
@@ -229,6 +232,9 @@ export function Diaper(props: { modelProp: string }) {
           setCostPerRawMaterial(
             Object.entries(response.data.diaper.costPerRawMaterial)
           );
+          setUnitCost(response.data.diaper.unitCost);
+          setDiaperPackageCost(response.data.diaper.diaperPackageCost);
+          setDiaperUnitCost(response.data.diaper.diaperUnitCost);
           setSalePrice(response.data.diaper.salePrice);
           setUnitSalePrice(response.data.diaper.unitSalePrice);
           setSalePriceWithST(response.data.diaper.salePriceWithST);
@@ -530,8 +536,6 @@ export function Diaper(props: { modelProp: string }) {
         </Col>
         <Col md={6}>
           <div style={{ padding: "16px" }}>
-            <h4>Resultados da simulação</h4>
-
             <div>
               <label className="form-label">Custo por matéria-prima</label>
               <ListGroup variant="flush" className="border rounded mb-4">
@@ -544,10 +548,39 @@ export function Diaper(props: { modelProp: string }) {
                     <Badge bg="secondary">R$ {rawMaterial[1]}</Badge>
                   </ListGroup.Item>
                 ))}
+                <ListGroup.Item
+                  key="unitCost"
+                  className="d-flex justify-content-between align-items-center"
+                >
+                  <span>
+                    <b>Custo unitário</b>
+                  </span>
+                  <Badge bg="info">R$ {unitCost}</Badge>
+                </ListGroup.Item>
               </ListGroup>
             </div>
 
             <div className="mt-auto">
+              <Row>
+                <Col sm={6}>
+                  <Alert variant="info" className="text-center p-2">
+                    <span className="d-block small">Custo do pacote</span>
+                    <strong className="d-block fs-4">
+                      R$ {diaperPackageCost || "0,00"}
+                    </strong>
+                  </Alert>
+                </Col>
+                <Col sm={6}>
+                  <Alert variant="light" className="text-center p-2">
+                    <span className="d-block small">
+                      Custo do pacote (unitário)
+                    </span>
+                    <strong className="d-block fs-4">
+                      R$ {diaperUnitCost || "0,00"}
+                    </strong>
+                  </Alert>
+                </Col>
+              </Row>
               <Row>
                 <Col sm={6}>
                   <Alert variant="light" className="text-center p-2">
