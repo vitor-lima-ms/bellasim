@@ -53,6 +53,11 @@ export function Diaper(props: { modelProp: string }) {
   const [unitSalePrice, setUnitSalePrice] = useState("");
   const [salePriceWithST, setSalePriceWithST] = useState("");
   const [unitSalePriceWithST, setUnitSalePriceWithST] = useState("");
+  // Flag para utilizada como dependência do useEffect que preenche os
+  // campos de formulário. Sempre que o formulário for enviado, a flag
+  // é atualizada, e os dados atualizados são buscados da API e utilizados
+  // para preencher os campos do formulário
+  const [submitFlag, setSubmitFlag] = useState(false);
 
   const [error, setError] = useState("");
 
@@ -193,9 +198,9 @@ export function Diaper(props: { modelProp: string }) {
   useEffect(() => {
     const fetchDiaper = async () => {
       try {
-        const response = await apiClient.post(
+        const response = await apiClient.get(
           `${API_URL}/diaper/read-by-model-size`,
-          { model: model, size: size }
+          { params: { model: model, size: size } }
         );
 
         if (response.data.diaper) {
@@ -240,7 +245,7 @@ export function Diaper(props: { modelProp: string }) {
     };
 
     fetchDiaper();
-  }, [model, size]);
+  }, [model, size, submitFlag]);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -248,19 +253,30 @@ export function Diaper(props: { modelProp: string }) {
     setError("");
 
     const rawMaterialsWeightsJSON = Object.fromEntries(rawMaterialsWeights);
-    apiClient.post(`${API_URL}/diaper/create-or-update`, {
-      model: model,
-      size: size,
-      packageQuantity: packageQuantity,
-      packagingCost: packagingCost,
-      baleBagCost: baleBagCost,
-      commissionPercent: commissionPercent,
-      taxPercent: taxPercent,
-      freightPercent: freightPercent,
-      contributionMarginPercent: contributionMarginPercent,
-      stPercent: stPercent,
-      rawMaterialsWeightsJSON: rawMaterialsWeightsJSON,
-    });
+
+    try {
+      await apiClient.post(`${API_URL}/diaper/create-or-update`, {
+        model: model,
+        size: size,
+        packageQuantity: packageQuantity,
+        packagingCost: packagingCost,
+        baleBagCost: baleBagCost,
+        commissionPercent: commissionPercent,
+        taxPercent: taxPercent,
+        freightPercent: freightPercent,
+        contributionMarginPercent: contributionMarginPercent,
+        stPercent: stPercent,
+        rawMaterialsWeightsJSON: rawMaterialsWeightsJSON,
+      });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Um erro desconhecido aconteceu!");
+      }
+    } finally {
+      setSubmitFlag(!submitFlag);
+    }
   };
 
   return (
