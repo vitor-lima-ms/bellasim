@@ -249,6 +249,14 @@ export function Diaper(props: { modelProp: string }) {
           setContributionMarginPercent("");
           setStPercent("");
           setRawMaterialsWeight(new Map());
+          setCostPerRawMaterial([]);
+          setUnitCost("");
+          setDiaperPackageCost("");
+          setDiaperUnitCost("");
+          setSalePrice("");
+          setUnitSalePrice("");
+          setSalePriceWithST("");
+          setUnitSalePriceWithST("");
         }
       } catch (error: unknown) {
         if (error instanceof Error) {
@@ -357,7 +365,9 @@ export function Diaper(props: { modelProp: string }) {
                           step="0.0001"
                           min={0}
                           placeholder="Quantidade"
-                          value={rawMaterialsWeights.get(rawMaterial.name)}
+                          value={
+                            rawMaterialsWeights.get(rawMaterial.name) || ""
+                          }
                           onChange={(event) => {
                             const newMap = new Map(rawMaterialsWeights);
 
