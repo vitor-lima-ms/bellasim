@@ -35,11 +35,6 @@ export function CreateAndReadRawMaterialPage() {
 
     setSuccess("");
 
-    if (!name || !unit || !unitCost) {
-      setError("Todos os campos são obrigatórios!");
-      return;
-    }
-
     try {
       await apiClient.post(`${API_URL}/raw-material/create`, {
         name,
