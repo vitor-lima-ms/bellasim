@@ -34,7 +34,7 @@ export function Diaper(props: { modelProp: string }) {
   const [taxes, setTaxes] = useState<IConstantParameter[]>([]);
   // Variável para armazenar as matérias-primas vindas da API
   const [rawMaterialsList, setRawMaterialsList] = useState<IRawMaterial[]>([]);
-  // Variáveis para preencher os campos e serem enviadas para a API
+  // Variáveis para preencher os campos e/ou serem enviadas para a API
   const model = props.modelProp;
   const [size, setSize] = useState("");
   const [baleBagCost, setBaleBagCost] = useState("");
@@ -48,6 +48,12 @@ export function Diaper(props: { modelProp: string }) {
   const [rawMaterialsWeights, setRawMaterialsWeight] = useState<
     Map<string, string>
   >(new Map());
+  const [costPerRawMaterial, setCostPerRawMaterial] = useState<string[][]>([]);
+  const [salePrice, setSalePrice] = useState("");
+  const [unitSalePrice, setUnitSalePrice] = useState("");
+  const [salePriceWithST, setSalePriceWithST] = useState("");
+  const [unitSalePriceWithST, setUnitSalePriceWithST] = useState("");
+
   const [error, setError] = useState("");
 
   // Chamada para listagem de parâmetros constantes e matérias-primas
@@ -183,7 +189,7 @@ export function Diaper(props: { modelProp: string }) {
     fetchRawMaterials();
   }, []);
 
-  // Chamada para preencher os campos do formulário
+  // Chamada para preencher os campos do formulário (editáveis e não editáveis)
   useEffect(() => {
     const fetchDiaper = async () => {
       try {
@@ -206,6 +212,13 @@ export function Diaper(props: { modelProp: string }) {
           setRawMaterialsWeight(
             new Map(Object.entries(response.data.diaper.rawMaterialsWeight))
           );
+          setCostPerRawMaterial(
+            Object.entries(response.data.diaper.costPerRawMaterial)
+          );
+          setSalePrice(response.data.diaper.salePrice);
+          setUnitSalePrice(response.data.diaper.unitSalePrice);
+          setSalePriceWithST(response.data.diaper.salePriceWithST);
+          setUnitSalePriceWithST(response.data.diaper.unitSalePriceWithST);
         } else {
           setPackageQuantity("");
           setPackagingCost("");
@@ -490,7 +503,49 @@ export function Diaper(props: { modelProp: string }) {
             </Form>
           </Card.Body>
         </Col>
-        <Col md={6}></Col>
+        <Col md={6}>
+          <Form.Group className="mt-3 mb-3" controlId="formRawMaterials">
+            <Form.Label>Custo por matéria-prima</Form.Label>
+            <Card>
+              <Card.Body style={{ maxHeight: "200px", overflowY: "auto" }}>
+                {costPerRawMaterial.map((rawMaterial) => (
+                  <>
+                    <Form.Label>{rawMaterial[0]}</Form.Label>
+                    <Form.Control
+                      className="mb-3"
+                      readOnly
+                      value={rawMaterial[1]}
+                    />
+                  </>
+                ))}
+              </Card.Body>
+            </Card>
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formSalePrice">
+            <Form.Label>Preço de venda</Form.Label>
+            <Form.Control className="mb-3" readOnly value={salePrice} />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formUnitSalePrice">
+            <Form.Label>Preço de venda por fralda</Form.Label>
+            <Form.Control className="mb-3" readOnly value={unitSalePrice} />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formSalePriceWithST">
+            <Form.Label>Preço de venda (com ST)</Form.Label>
+            <Form.Control className="mb-3" readOnly value={salePriceWithST} />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formUnitSalePriceWIthST">
+            <Form.Label>Preço de venda por fralda (com ST)</Form.Label>
+            <Form.Control
+              className="mb-3"
+              readOnly
+              value={unitSalePriceWithST}
+            />
+          </Form.Group>
+        </Col>
       </Row>
     </Card>
   );
