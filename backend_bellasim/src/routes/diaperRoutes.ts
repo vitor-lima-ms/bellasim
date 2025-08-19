@@ -10,7 +10,7 @@ router.post(
   DiaperController.createOrUpdate
 );
 
-router.post(
+router.get(
   "/read-by-model-size",
   authMiddleware,
   DiaperController.readByModelSize

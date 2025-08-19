@@ -31,8 +31,8 @@ export class DiaperController {
   }
 
   static async readByModelSize(req: Request, res: Response) {
-    const model = req.body.model;
-    const size = req.body.size;
+    const model = String(req.query.model);
+    const size = String(req.query.size);
 
     try {
       const diaper = await DiaperService.readByModelSize(model, size);
