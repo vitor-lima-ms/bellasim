@@ -355,7 +355,7 @@ export function Diaper(props: { modelProp: string }) {
               <Form.Group className="mb-3" controlId="formRawMaterials">
                 <Form.Label>Matérias-primas</Form.Label>
                 <Card>
-                  <Card.Body style={{ maxHeight: "200px", overflowY: "auto" }}>
+                  <Card.Body>
                     {rawMaterialsList.map((rawMaterial) => (
                       <>
                         <Form.Label>{rawMaterial.name}</Form.Label>
