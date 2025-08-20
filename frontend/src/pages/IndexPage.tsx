@@ -10,7 +10,7 @@ export function IndexPage() {
   const [bigConfort, setBigConfort] = useState(false);
 
   return (
-    <Container className="mt-5">
+    <Container className="mt-3">
       <Row className="justify-content-center">
         <Col>
           <Card>
@@ -93,7 +93,7 @@ export function IndexPage() {
         </Col>
       </Row>
 
-      <Row className="mt-3 mb-5">
+      <Row className="mt-3 mb-3">
         <Col>
           {bellafral && <Diaper modelProp="Bellafral" />}
           {bellafralBasic && <Diaper modelProp="Bellafral Basic" />}
