@@ -52,7 +52,9 @@ export function Diaper(props: { modelProp: string }) {
   const [rawMaterialsWeights, setRawMaterialsWeight] = useState<
     Map<string, string>
   >(new Map());
-  const [costPerRawMaterial, setCostPerRawMaterial] = useState<string[][]>([]);
+  const [costPerRawMaterial, setCostPerRawMaterial] = useState<
+    [string, string][]
+  >([]);
   const [unitCost, setUnitCost] = useState("");
   const [diaperPackageCost, setDiaperPackageCost] = useState("");
   const [diaperUnitCost, setDiaperUnitCost] = useState("");
