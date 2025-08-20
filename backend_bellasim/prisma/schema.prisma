@@ -27,7 +27,6 @@ model RawMaterial {
   name      String   @unique
   unit      String
   unitCost  String
-  Diaper    Diaper[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -69,34 +68,33 @@ model ST {
 }
 
 model Diaper {
-  id                        Int                @id @default(autoincrement())
+  id                        Int       @id @default(autoincrement())
   model                     String
   size                      String
-  modelSize                 String             @unique
-  RawMaterial               RawMaterial[]
+  modelSize                 String    @unique
   rawMaterials              String[]
   rawMaterialsWeight        Json
   costPerRawMaterial        Json
   unitCost                  String?
   packageQuantity           String
-  Packaging                 Packaging          @relation(fields: [packagingCost], references: [cost])
+  Packaging                 Packaging @relation(fields: [packagingCost], references: [cost])
   packagingCost             String
-  BaleBag                   BaleBag            @relation(fields: [baleBagCost], references: [cost])
+  BaleBag                   BaleBag   @relation(fields: [baleBagCost], references: [cost])
   baleBagCost               String
   diaperPackageCost         String?
   diaperUnitCost            String?
   commissionPercent         String
-  Tax                       Tax                @relation(fields: [taxPercent], references: [percent])
+  Tax                       Tax       @relation(fields: [taxPercent], references: [percent])
   taxPercent                String
   freightPercent            String
   contributionMarginPercent String
-  ST                        ST                 @relation(fields: [STPercent], references: [percent])
+  ST                        ST        @relation(fields: [STPercent], references: [percent])
   STPercent                 String
   salePrice                 String?
   unitSalePrice             String?
   salePriceWithST           String?
   unitSalePriceWithST       String?
   finalSalePrice            String?
-  createdAt                 DateTime           @default(now())
-  updatedAt                 DateTime           @updatedAt
+  createdAt                 DateTime  @default(now())
+  updatedAt                 DateTime  @updatedAt
 }
