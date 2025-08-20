@@ -30,14 +30,9 @@ interface IRawMaterial {
 }
 
 export function Diaper(props: { modelProp: string }) {
-  // Variáveis para armazenar as listas de parâmetros constantes vindas da API
+  // Variáveis para armazenar os parâmetros constantes vindos da API
   const [packageQuantity, setPackageQuantity] = useState("");
   const [baleBags, setBaleBags] = useState<IConstantParameter[]>([]);
-  const [commissions, setCommissions] = useState<IConstantParameter[]>([]);
-  const [contributionMargins, setContributionMargins] = useState<
-    IConstantParameter[]
-  >([]);
-  const [freights, setFreights] = useState<IConstantParameter[]>([]);
   const [packagings, setPackagings] = useState<IConstantParameter[]>([]);
   const [sts, setSts] = useState<IConstantParameter[]>([]);
   const [taxes, setTaxes] = useState<IConstantParameter[]>([]);
@@ -80,50 +75,6 @@ export function Diaper(props: { modelProp: string }) {
         const response = await apiClient.get(`${API_URL}/bale-bag/read`);
 
         setBaleBags(response.data.baleBags);
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message);
-        } else {
-          setError("Um erro desconhecido aconteceu!");
-        }
-      }
-    };
-
-    const fetchCommissions = async () => {
-      try {
-        const response = await apiClient.get(`${API_URL}/commission/read`);
-
-        setCommissions(response.data.commissions);
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message);
-        } else {
-          setError("Um erro desconhecido aconteceu!");
-        }
-      }
-    };
-
-    const fetchContributionMargins = async () => {
-      try {
-        const response = await apiClient.get(
-          `${API_URL}/contribution-margin/read`
-        );
-
-        setContributionMargins(response.data.contributionMargins);
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message);
-        } else {
-          setError("Um erro desconhecido aconteceu!");
-        }
-      }
-    };
-
-    const fetchFreights = async () => {
-      try {
-        const response = await apiClient.get(`${API_URL}/freight/read`);
-
-        setFreights(response.data.freights);
       } catch (error) {
         if (error instanceof Error) {
           setError(error.message);
@@ -190,12 +141,6 @@ export function Diaper(props: { modelProp: string }) {
     };
 
     fetchBaleBags();
-
-    fetchCommissions();
-
-    fetchContributionMargins();
-
-    fetchFreights();
 
     fetchPackagings();
 
@@ -427,22 +372,16 @@ export function Diaper(props: { modelProp: string }) {
                 <Col md={4}>
                   <Form.Group className="mb-3" controlId="formCommission">
                     <Form.Label>Comissão (%)</Form.Label>
-                    <Form.Select
+                    <Form.Control
+                      type="number"
+                      min={0}
+                      step="0.001"
                       value={commissionPercent}
                       onChange={(event) =>
                         setCommissionPercent(event.target.value)
                       }
                       required
-                    >
-                      <option value="" disabled>
-                        ...
-                      </option>
-                      {commissions.map((commission) => (
-                        <option key={commission.id} value={commission.percent}>
-                          {commission.percent}
-                        </option>
-                      ))}
-                    </Form.Select>
+                    ></Form.Control>
                   </Form.Group>
                 </Col>
                 <Col md={4}>
@@ -467,22 +406,16 @@ export function Diaper(props: { modelProp: string }) {
                 <Col md={4}>
                   <Form.Group className="mb-3" controlId="formFreight">
                     <Form.Label>Frete (%)</Form.Label>
-                    <Form.Select
+                    <Form.Control
+                      type="number"
+                      min={0}
+                      step="0.001"
                       value={freightPercent}
                       onChange={(event) =>
                         setFreightPercent(event.target.value)
                       }
                       required
-                    >
-                      <option value="" disabled>
-                        ...
-                      </option>
-                      {freights.map((freight) => (
-                        <option key={freight.id} value={freight.percent}>
-                          {freight.percent}
-                        </option>
-                      ))}
-                    </Form.Select>
+                    ></Form.Control>
                   </Form.Group>
                 </Col>
               </Row>
@@ -494,25 +427,16 @@ export function Diaper(props: { modelProp: string }) {
                     controlId="formContributionMargin"
                   >
                     <Form.Label>Margem de Contribuição (%)</Form.Label>
-                    <Form.Select
+                    <Form.Control
+                      type="number"
+                      min={0}
+                      step="0.001"
                       value={contributionMarginPercent}
                       onChange={(event) =>
                         setContributionMarginPercent(event.target.value)
                       }
                       required
-                    >
-                      <option value="" disabled>
-                        ...
-                      </option>
-                      {contributionMargins.map((contributionMargin) => (
-                        <option
-                          key={contributionMargin.id}
-                          value={contributionMargin.percent}
-                        >
-                          {contributionMargin.percent}
-                        </option>
-                      ))}
-                    </Form.Select>
+                    ></Form.Control>
                   </Form.Group>
                 </Col>
                 <Col md={6}>

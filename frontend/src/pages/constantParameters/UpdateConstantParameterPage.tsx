@@ -20,18 +20,7 @@ const apiClient = axios.create({
 const configItems = {
   packaging: { name: "Embalagem", field: "Custo (R$)", fieldType: "cost" },
   baleBag: { name: "Saco para fardos", field: "Custo (R$)", fieldType: "cost" },
-  commission: {
-    name: "Comissão",
-    field: "Percentual (%)",
-    fieldType: "percent",
-  },
   tax: { name: "Impostos", field: "Percentual (%)", fieldType: "percent" },
-  freight: { name: "Frete", field: "Percentual (%)", fieldType: "percent" },
-  contributionMargin: {
-    name: "Margem de Contribuição",
-    field: "Percentual (%)",
-    fieldType: "percent",
-  },
   st: {
     name: "Substitução Tributária (ST)",
     field: "Percentual (%)",
@@ -70,38 +59,12 @@ export function UpdateConstantParameterPage() {
             setValue(response.data.baleBag.cost);
 
             break;
-          case "commission":
-            response = await apiClient.get(`${API_URL}/commission/read/${id}`);
-
-            setDescription(response.data.commission.description);
-
-            setValue(response.data.commission.percent);
-
-            break;
           case "tax":
             response = await apiClient.get(`${API_URL}/tax/read/${id}`);
 
             setDescription(response.data.tax.description);
 
             setValue(response.data.tax.percent);
-
-            break;
-          case "freight":
-            response = await apiClient.get(`${API_URL}/freight/read/${id}`);
-
-            setDescription(response.data.freight.description);
-
-            setValue(response.data.freight.percent);
-
-            break;
-          case "contributionMargin":
-            response = await apiClient.get(
-              `${API_URL}/contribution-margin/read/${id}`
-            );
-
-            setDescription(response.data.contributionMargin.description);
-
-            setValue(response.data.contributionMargin.percent);
 
             break;
           case "st":
@@ -148,35 +111,8 @@ export function UpdateConstantParameterPage() {
           navigate("/constant-parameter");
 
           break;
-        case "commission":
-          await apiClient.put(`${API_URL}/commission/update/${id}`, {
-            description: description,
-            percent: value,
-          });
-
-          navigate("/constant-parameter");
-
-          break;
         case "tax":
           await apiClient.put(`${API_URL}/tax/update/${id}`, {
-            description: description,
-            percent: value,
-          });
-
-          navigate("/constant-parameter");
-
-          break;
-        case "freight":
-          await apiClient.put(`${API_URL}/freight/update/${id}`, {
-            description: description,
-            percent: value,
-          });
-
-          navigate("/constant-parameter");
-
-          break;
-        case "contributionMargin":
-          await apiClient.put(`${API_URL}/contribution-margin/update/${id}`, {
             description: description,
             percent: value,
           });

@@ -12,18 +12,7 @@ const apiClient = axios.create({
 const configItems = {
   packaging: { name: "Embalagem", field: "Custo (R$)", fieldType: "cost" },
   baleBag: { name: "Saco para fardos", field: "Custo (R$)", fieldType: "cost" },
-  commission: {
-    name: "Comissão",
-    field: "Percentual (%)",
-    fieldType: "percent",
-  },
   tax: { name: "Impostos", field: "Percentual (%)", fieldType: "percent" },
-  freight: { name: "Frete", field: "Percentual (%)", fieldType: "percent" },
-  contributionMargin: {
-    name: "Margem de Contribuição",
-    field: "Percentual (%)",
-    fieldType: "percent",
-  },
   st: {
     name: "Substitução Tributária (ST)",
     field: "Percentual (%)",
@@ -78,26 +67,8 @@ export function CreateAndReadConstantParameterPage() {
             cost: value,
           });
           break;
-        case "commission":
-          await apiClient.post(`${API_URL}/commission/create`, {
-            description: description,
-            percent: value,
-          });
-          break;
         case "tax":
           await apiClient.post(`${API_URL}/tax/create`, {
-            description: description,
-            percent: value,
-          });
-          break;
-        case "freight":
-          await apiClient.post(`${API_URL}/freight/create`, {
-            description: description,
-            percent: value,
-          });
-          break;
-        case "contributionMargin":
-          await apiClient.post(`${API_URL}/contribution-margin/create`, {
             description: description,
             percent: value,
           });
@@ -143,28 +114,10 @@ export function CreateAndReadConstantParameterPage() {
           setParametersList(response.data.baleBags);
 
           break;
-        case "commission":
-          response = await apiClient.get(`${API_URL}/commission/read`);
-
-          setParametersList(response.data.commissions);
-
-          break;
         case "tax":
           response = await apiClient.get(`${API_URL}/tax/read`);
 
           setParametersList(response.data.taxes);
-
-          break;
-        case "freight":
-          response = await apiClient.get(`${API_URL}/freight/read`);
-
-          setParametersList(response.data.freights);
-
-          break;
-        case "contributionMargin":
-          response = await apiClient.get(`${API_URL}/contribution-margin/read`);
-
-          setParametersList(response.data.contributionMargins);
 
           break;
         case "st":
@@ -210,36 +163,12 @@ export function CreateAndReadConstantParameterPage() {
           setParametersList(response.data.baleBags);
 
           break;
-        case "commission":
-          await apiClient.delete(`${API_URL}/commission/delete/${id}`);
-
-          response = await apiClient.get(`${API_URL}/commission/read`);
-
-          setParametersList(response.data.commissions);
-
-          break;
         case "tax":
           await apiClient.delete(`${API_URL}/tax/delete/${id}`);
 
           response = await apiClient.get(`${API_URL}/tax/read`);
 
           setParametersList(response.data.taxes);
-
-          break;
-        case "freight":
-          await apiClient.delete(`${API_URL}/freight/delete/${id}`);
-
-          response = await apiClient.get(`${API_URL}/freight/read`);
-
-          setParametersList(response.data.freights);
-
-          break;
-        case "contributionMargin":
-          await apiClient.delete(`${API_URL}/contribution-margin/delete/${id}`);
-
-          response = await apiClient.get(`${API_URL}/contribution-margin/read`);
-
-          setParametersList(response.data.contributionMargins);
 
           break;
         case "st":
@@ -273,19 +202,7 @@ export function CreateAndReadConstantParameterPage() {
           navigate(`/${itemType}/update-constant-parameter/${id}`);
 
           break;
-        case "commission":
-          navigate(`/${itemType}/update-constant-parameter/${id}`);
-
-          break;
         case "tax":
-          navigate(`/${itemType}/update-constant-parameter/${id}`);
-
-          break;
-        case "freight":
-          navigate(`/${itemType}/update-constant-parameter/${id}`);
-
-          break;
-        case "contributionMargin":
           navigate(`/${itemType}/update-constant-parameter/${id}`);
 
           break;
