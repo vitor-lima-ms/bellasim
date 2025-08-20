@@ -12,7 +12,7 @@ export class DiaperService {
     const modelSize = `${diaperFromFrontend.model}_${diaperFromFrontend.size}`;
     // rawMaterialsWeight
     const rawMaterialsWeightMap = new Map(
-      Object.entries(diaperFromFrontend.rawMaterialsWeightsJSON)
+      Object.entries(diaperFromFrontend.rawMaterialsWeightsObject)
     );
 
     rawMaterialsWeightMap.forEach((value, key) => {

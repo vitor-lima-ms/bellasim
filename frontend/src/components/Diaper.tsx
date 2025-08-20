@@ -222,7 +222,7 @@ export function Diaper(props: { modelProp: string }) {
 
     setError("");
 
-    const rawMaterialsWeightsJSON = Object.fromEntries(rawMaterialsWeights);
+    const rawMaterialsWeightsObject = Object.fromEntries(rawMaterialsWeights);
 
     try {
       await apiClient.post(`${API_URL}/diaper/create-or-update`, {
@@ -236,7 +236,7 @@ export function Diaper(props: { modelProp: string }) {
         freightPercent: freightPercent,
         contributionMarginPercent: contributionMarginPercent,
         stPercent: stPercent,
-        rawMaterialsWeightsJSON: rawMaterialsWeightsJSON,
+        rawMaterialsWeightsJSON: rawMaterialsWeightsObject,
       });
     } catch (error: unknown) {
       if (error instanceof Error) {

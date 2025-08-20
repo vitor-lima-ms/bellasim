@@ -11,5 +11,5 @@ export interface IDiaperFromFrontend {
   freightPercent: string;
   contributionMarginPercent: string;
   STPercent: string;
-  rawMaterialsWeightsJSON: IRawMaterialWeight;
+  rawMaterialsWeightsObject: IRawMaterialWeight;
 }
