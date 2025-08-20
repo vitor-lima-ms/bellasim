@@ -17,7 +17,7 @@ export class DiaperController {
       freightPercent: req.body.freightPercent,
       contributionMarginPercent: req.body.contributionMarginPercent,
       STPercent: req.body.stPercent,
-      rawMaterialsWeightsJSON: req.body.rawMaterialsWeightsJSON,
+      rawMaterialsWeightsObject: req.body.rawMaterialsWeightsJSON,
     };
 
     try {
