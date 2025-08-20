@@ -11,11 +11,19 @@ export class DiaperService {
     // modelSize
     const modelSize = `${diaperFromFrontend.model}_${diaperFromFrontend.size}`;
     // rawMaterialsWeight
-    const rawMaterialsWeight = diaperFromFrontend.rawMaterialsWeightsJSON;
-    // rawMaterials
-    const rawMaterialsInDiaper = Object.keys(
-      diaperFromFrontend.rawMaterialsWeightsJSON
+    const rawMaterialsWeightMap = new Map(
+      Object.entries(diaperFromFrontend.rawMaterialsWeightsJSON)
     );
+
+    rawMaterialsWeightMap.forEach((value, key) => {
+      if (!value) {
+        rawMaterialsWeightMap.delete(key);
+      }
+    });
+
+    const rawMaterialsWeight = Object.fromEntries(rawMaterialsWeightMap);
+    // rawMaterials
+    const rawMaterialsInDiaper = Object.keys(rawMaterialsWeight);
     // costPerRawMaterial
     let costPerRawMaterial: ICostPerRawMaterial = {};
 
@@ -79,7 +87,7 @@ export class DiaperService {
         size: diaperFromFrontend.size,
         modelSize: modelSize,
         rawMaterials: rawMaterialsInDiaper,
-        rawMaterialsWeight: diaperFromFrontend.rawMaterialsWeightsJSON,
+        rawMaterialsWeight: rawMaterialsWeight,
         costPerRawMaterial: costPerRawMaterial,
         unitCost: String(unitCost.toFixed(4)),
         packageQuantity: diaperFromFrontend.packageQuantity,
@@ -99,7 +107,7 @@ export class DiaperService {
       },
       update: {
         rawMaterials: rawMaterialsInDiaper,
-        rawMaterialsWeight: diaperFromFrontend.rawMaterialsWeightsJSON,
+        rawMaterialsWeight: rawMaterialsWeight,
         costPerRawMaterial: costPerRawMaterial,
         unitCost: String(unitCost.toFixed(4)),
         packageQuantity: diaperFromFrontend.packageQuantity,
