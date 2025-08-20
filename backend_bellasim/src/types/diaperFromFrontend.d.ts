@@ -1,5 +1,4 @@
 import { IRawMaterialWeight } from "./rawMaterialWeight";
-import { ICostPerRawMaterial } from "./costPerRawMaterial";
 
 export interface IDiaperFromFrontend {
   model: string;
@@ -12,5 +11,5 @@ export interface IDiaperFromFrontend {
   freightPercent: string;
   contributionMarginPercent: string;
   STPercent: string;
-  rawMaterialsWeightsJSON: object;
+  rawMaterialsWeightsJSON: IRawMaterialWeight;
 }
