@@ -86,7 +86,7 @@ export class DiaperService {
         model: diaperFromFrontend.model,
         size: diaperFromFrontend.size,
         modelSize: modelSize,
-        rawMaterials: rawMaterialsInDiaper,
+        rawMaterials: rawMaterialsInDiaper.sort(),
         rawMaterialsWeight: rawMaterialsWeight,
         costPerRawMaterial: costPerRawMaterial,
         unitCost: String(unitCost.toFixed(4)),
@@ -106,7 +106,7 @@ export class DiaperService {
         unitSalePriceWithST: String(Number(unitSalePriceWithST).toFixed(2)),
       },
       update: {
-        rawMaterials: rawMaterialsInDiaper,
+        rawMaterials: rawMaterialsInDiaper.sort(),
         rawMaterialsWeight: rawMaterialsWeight,
         costPerRawMaterial: costPerRawMaterial,
         unitCost: String(unitCost.toFixed(4)),
