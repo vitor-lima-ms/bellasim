@@ -50,34 +50,7 @@ model BaleBag {
   updatedAt   DateTime @updatedAt
 }
 
-model Commission {
-  id          Int      @id @default(autoincrement())
-  description String
-  percent     String   @unique
-  Diaper      Diaper[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
-
 model Tax {
-  id          Int      @id @default(autoincrement())
-  description String
-  percent     String   @unique
-  Diaper      Diaper[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
-
-model Freight {
-  id          Int      @id @default(autoincrement())
-  description String
-  percent     String   @unique
-  Diaper      Diaper[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
-
-model ContributionMargin {
   id          Int      @id @default(autoincrement())
   description String
   percent     String   @unique
@@ -112,13 +85,10 @@ model Diaper {
   baleBagCost               String
   diaperPackageCost         String?
   diaperUnitCost            String?
-  Commission                Commission         @relation(fields: [commissionPercent], references: [percent])
   commissionPercent         String
   Tax                       Tax                @relation(fields: [taxPercent], references: [percent])
   taxPercent                String
-  Freight                   Freight            @relation(fields: [freightPercent], references: [percent])
   freightPercent            String
-  ContributionMargin        ContributionMargin @relation(fields: [contributionMarginPercent], references: [percent])
   contributionMarginPercent String
   ST                        ST                 @relation(fields: [STPercent], references: [percent])
   STPercent                 String
