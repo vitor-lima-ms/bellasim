@@ -355,7 +355,7 @@ export function Diaper(props: { modelProp: string }) {
               <Form.Group className="mb-3" controlId="formRawMaterials">
                 <Form.Label>Matérias-primas</Form.Label>
                 <Card>
-                  <Card.Body>
+                  <Card.Body style={{ maxHeight: "200px", overflowY: "auto" }}>
                     {rawMaterialsList.map((rawMaterial) => (
                       <>
                         <Form.Label>{rawMaterial.name}</Form.Label>
@@ -394,7 +394,7 @@ export function Diaper(props: { modelProp: string }) {
                       <option value="" disabled>
                         ...
                       </option>
-                      {packagings.map((packaging) => (
+                      {packagings.sort().map((packaging) => (
                         <option key={packaging.id} value={packaging.cost}>
                           {packaging.cost}
                         </option>
@@ -413,7 +413,7 @@ export function Diaper(props: { modelProp: string }) {
                       <option value="" disabled>
                         ...
                       </option>
-                      {baleBags.map((baleBag) => (
+                      {baleBags.sort().map((baleBag) => (
                         <option key={baleBag.id} value={baleBag.cost}>
                           {baleBag.cost}
                         </option>
@@ -456,7 +456,7 @@ export function Diaper(props: { modelProp: string }) {
                       <option value="" disabled>
                         ...
                       </option>
-                      {taxes.map((tax) => (
+                      {taxes.sort().map((tax) => (
                         <option key={tax.id} value={tax.percent}>
                           {tax.percent}
                         </option>
@@ -526,7 +526,7 @@ export function Diaper(props: { modelProp: string }) {
                       <option value="" disabled>
                         ...
                       </option>
-                      {sts.map((sts) => (
+                      {sts.sort().map((sts) => (
                         <option key={sts.id} value={sts.percent}>
                           {sts.percent}
                         </option>
@@ -549,7 +549,7 @@ export function Diaper(props: { modelProp: string }) {
             <div>
               <label className="form-label">Custo por matéria-prima</label>
               <ListGroup variant="flush" className="border rounded mb-4">
-                {costPerRawMaterial.map((rawMaterial, index) => (
+                {costPerRawMaterial.sort().map((rawMaterial, index) => (
                   <ListGroup.Item
                     key={index}
                     className="d-flex justify-content-between align-items-center"
