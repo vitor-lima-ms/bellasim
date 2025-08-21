@@ -19,4 +19,14 @@ export class SimulationController {
       res.status(500).json({ message: error.message });
     }
   }
+
+  static async read(req: Request, res: Response) {
+    try {
+      const simulations = await SimulationService.read();
+
+      res.status(200).json({ simulations });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  }
 }

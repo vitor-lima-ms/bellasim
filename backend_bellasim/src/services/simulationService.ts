@@ -21,4 +21,14 @@ export class SimulationService {
       throw new Error("Erro inesperado!");
     }
   }
+
+  static async read() {
+    const simulations = await prisma.simulation.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return simulations;
+  }
 }
