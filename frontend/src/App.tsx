@@ -5,7 +5,7 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 
 import { Routes, Route } from "react-router-dom";
 
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 
 import { IndexPage } from "./pages/IndexPage";
 
@@ -42,7 +42,9 @@ function AppContent() {
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
-                  <Nav.Link href="/">Simulação de custos</Nav.Link>
+                  <NavDropdown title="Simulação de custos">
+                    <Nav.Link href="/">Simular</Nav.Link>
+                  </NavDropdown>
                   <Nav.Link href="/raw-material">Matérias-primas</Nav.Link>
                   <Nav.Link href="/constant-parameter">
                     Parâmetros constantes
