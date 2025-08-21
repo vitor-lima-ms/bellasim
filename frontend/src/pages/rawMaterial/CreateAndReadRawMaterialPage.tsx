@@ -21,15 +21,18 @@ export function CreateAndReadRawMaterialPage() {
   const [unit, setUnit] = useState("");
   const [unitCost, setUnitCost] = useState("");
   const [rawMaterialsList, setRawMaterialsList] = useState<IRawMaterial[]>([]);
+  // Flag para utilizada como dependência do useEffect que atualiza a tabela.
+  // Sempre que o formulário for enviado, a flag
+  // é atualizada, e os dados são buscados da API e utilizados
+  // para preencher os campos do formulário
   const [flag, setFlag] = useState(false);
+  
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-
-    setFlag(true);
 
     setError("");
 
@@ -56,7 +59,7 @@ export function CreateAndReadRawMaterialPage() {
         setError("Um erro desconhecido aconteceu!");
       }
     } finally {
-      setFlag(false);
+      setFlag(!flag);
     }
   };
 
