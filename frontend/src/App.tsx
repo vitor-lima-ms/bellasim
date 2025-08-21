@@ -8,6 +8,7 @@ import { Routes, Route } from "react-router-dom";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 
 import { IndexPage } from "./pages/IndexPage";
+import { ReadSimulationPage } from "./pages/simulations/ReadSimulationPage";
 
 import { LoginPage } from "./pages/auth/LoginPage";
 import { RegisterPage } from "./pages/auth/RegisterPage";
@@ -43,7 +44,10 @@ function AppContent() {
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
                   <NavDropdown title="Simulação de custos">
-                    <Nav.Link href="/">Simular</Nav.Link>
+                    <NavDropdown.Item href="/">Simular</NavDropdown.Item>
+                    <NavDropdown.Item href="/read-simulation">
+                      Histórico de simulações
+                    </NavDropdown.Item>
                   </NavDropdown>
                   <Nav.Link href="/raw-material">Matérias-primas</Nav.Link>
                   <Nav.Link href="/constant-parameter">
@@ -64,6 +68,15 @@ function AppContent() {
           element={
             <ProtectedRoute>
               <IndexPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/read-simulation"
+          element={
+            <ProtectedRoute>
+              <ReadSimulationPage />
             </ProtectedRoute>
           }
         />
