@@ -98,3 +98,10 @@ model Diaper {
   createdAt                 DateTime  @default(now())
   updatedAt                 DateTime  @updatedAt
 }
+
+model Simulation {
+  id              Int      @unique @default(autoincrement())
+  simulatedDiaper Json
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
