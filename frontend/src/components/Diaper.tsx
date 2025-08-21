@@ -224,6 +224,7 @@ export function Diaper(props: { modelProp: string }) {
 
     const rawMaterialsWeightsObject = Object.fromEntries(rawMaterialsWeights);
 
+    // Chamada para enviar os dados e criar ou atualizar a fralda
     try {
       await apiClient.post(`${API_URL}/diaper/create-or-update`, {
         model: model,
@@ -246,6 +247,20 @@ export function Diaper(props: { modelProp: string }) {
       }
     } finally {
       setSubmitFlag(!submitFlag);
+    }
+
+    // Chamada para registrar a simulação
+    try {
+      await apiClient.post(`${API_URL}/simulation/register-simulation`, {
+        model: model,
+        size: size,
+      });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Um erro desconhecido aconteceu!");
+      }
     }
   };
 
