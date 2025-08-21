@@ -34,6 +34,7 @@ import taxRoutes from "./routes/taxRoutes";
 import stRoutes from "./routes/stRoutes";
 import rawMaterialRoutes from "./routes/rawMaterialRoutes";
 import diaperRoutes from "./routes/diaperRoutes";
+import simulationRoutes from "./routes/simulationRoutes";
 
 app.use("/api/auth", authRoutes);
 app.use("/api/bale-bag", baleBagRoutes);
@@ -42,6 +43,7 @@ app.use("/api/tax", taxRoutes);
 app.use("/api/st", stRoutes);
 app.use("/api/raw-material", rawMaterialRoutes);
 app.use("/api/diaper", diaperRoutes);
+app.use("/api/simulation", simulationRoutes);
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`Servidor rodando na porta ${port}`);
