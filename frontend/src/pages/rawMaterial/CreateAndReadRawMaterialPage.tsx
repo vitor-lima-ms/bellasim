@@ -25,8 +25,8 @@ export function CreateAndReadRawMaterialPage() {
   // Sempre que o formulário for enviado, a flag
   // é atualizada, e os dados são buscados da API e utilizados
   // para preencher os campos do formulário
-  const [flag, setFlag] = useState(false);
-  
+  const [submitFlag, setSubmitFlag] = useState(false);
+
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
@@ -59,7 +59,7 @@ export function CreateAndReadRawMaterialPage() {
         setError("Um erro desconhecido aconteceu!");
       }
     } finally {
-      setFlag(!flag);
+      setSubmitFlag(!submitFlag);
     }
   };
 
@@ -95,7 +95,7 @@ export function CreateAndReadRawMaterialPage() {
     };
 
     fetchRawMaterials();
-  }, [flag]);
+  }, [submitFlag]);
 
   return (
     <Container className="mt-5">
