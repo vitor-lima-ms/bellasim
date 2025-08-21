@@ -10,6 +10,6 @@ router.post(
   SimulationController.registerSimulation
 );
 
-router.post("/read", authMiddleware, SimulationController.read);
+router.get("/read", authMiddleware, SimulationController.read);
 
 export default router;
