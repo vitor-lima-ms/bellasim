@@ -2,7 +2,15 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Card, Col, Container, Form, Row, Alert } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Form,
+  Row,
+  Alert,
+} from "react-bootstrap";
 
 export function LoginPage() {
   const [email, setEmail] = useState("");
@@ -34,11 +42,7 @@ export function LoginPage() {
               Login
             </Card.Header>
             <Card.Body>
-              {error && (
-                <Alert variant="danger">
-                  {error}
-                </Alert>
-              )}
+              {error && <Alert variant="danger">{error}</Alert>}
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Email</Form.Label>
@@ -61,13 +65,19 @@ export function LoginPage() {
                 </Form.Group>
 
                 <div className="d-grid">
-                    <Button className="btn-custom-orange" variant="primary" type="submit">
-                        Entrar
-                    </Button>
+                  <Button
+                    className="btn-custom-orange"
+                    variant="primary"
+                    type="submit"
+                  >
+                    Entrar
+                  </Button>
                 </div>
               </Form>
               <div className="mt-3 text-center">
-                <Link to={"/forgot-password"} className="link-custom-orange">Esqueci minha senha.</Link>
+                <Link to={"/forgot-password"} className="link-custom-orange">
+                  Esqueci minha senha.
+                </Link>
               </div>
             </Card.Body>
           </Card>

@@ -8,9 +8,17 @@ export function LogoutPage() {
 
   useEffect(() => {
     const logout = () => {
-      auth.logout();
+      try {
+        auth.logout();
 
-      navigate("/login");
+        navigate("/login");
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.log(error.message);
+        } else {
+          console.log(error);
+        }
+      }
     };
 
     logout();
