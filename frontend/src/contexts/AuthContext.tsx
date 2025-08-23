@@ -26,7 +26,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await apiClient.get(`${API_URL}/status`);
 
       setIsAuthenticated(true);
-    } catch (error) {
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      } else {
+        console.log(error);
+      }
+
       setIsAuthenticated(false);
     } finally {
       setIsLoading(false);
@@ -71,6 +77,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth() {
   const context = useContext(AuthContext);
 
