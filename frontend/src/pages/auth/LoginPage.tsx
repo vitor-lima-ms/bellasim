@@ -26,8 +26,12 @@ export function LoginPage() {
       await auth.login(email, password);
 
       navigate("/");
-    } catch (error) {
-      console.log(error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      } else {
+        console.log(error);
+      }
 
       setError("Email ou senha inválidos!");
     }
