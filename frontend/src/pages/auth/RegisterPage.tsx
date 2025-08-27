@@ -3,9 +3,20 @@ import axios from "axios";
 import type { FormEvent } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, Col, Container, Form, Row, Spinner, Alert } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Form,
+  Row,
+  Spinner,
+  Alert,
+} from "react-bootstrap";
 
 const API_URL = "/api";
+
+const apiClient = axios.create({ withCredentials: true });
 
 export function RegisterPage() {
   const [name, setName] = useState("");
@@ -25,7 +36,7 @@ export function RegisterPage() {
     try {
       setLoading(true);
 
-      await axios.post(`${API_URL}/auth/register`, {
+      await apiClient.post(`${API_URL}/auth/register`, {
         name,
         email,
         password,
@@ -68,11 +79,7 @@ export function RegisterPage() {
               Registrar novo usuário
             </Card.Header>
             <Card.Body>
-              {error && (
-                <Alert variant="danger">
-                  {error}
-                </Alert>
-              )}
+              {error && <Alert variant="danger">{error}</Alert>}
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicName">
                   <Form.Label>Nome</Form.Label>
@@ -104,7 +111,10 @@ export function RegisterPage() {
                   />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
+                <Form.Group
+                  className="mb-3"
+                  controlId="formBasicConfirmPassword"
+                >
                   <Form.Label>Confirmar senha</Form.Label>
                   <Form.Control
                     type="password"
@@ -125,7 +135,7 @@ export function RegisterPage() {
                     <option value="admin">Administrador</option>
                   </Form.Select>
                 </Form.Group>
-                
+
                 <div className="d-grid">
                   <Button
                     className="btn-custom-orange"
