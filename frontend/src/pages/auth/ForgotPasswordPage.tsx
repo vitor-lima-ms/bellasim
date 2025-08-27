@@ -1,6 +1,15 @@
-import React, { useState } from "react";
-import { Container, Form, Button, Alert, Card, Spinner, Row, Col } from "react-bootstrap";
 import axios from "axios";
+import { useState, type FormEvent } from "react";
+import {
+  Container,
+  Form,
+  Button,
+  Alert,
+  Card,
+  Spinner,
+  Row,
+  Col,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const API_URL = "/api/auth";
@@ -11,7 +20,7 @@ export function ForgotPasswordPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     setLoading(true);
@@ -64,7 +73,12 @@ export function ForgotPasswordPage() {
                 </Form.Group>
 
                 <div className="d-grid">
-                  <Button className="btn-custom-orange" variant="primary" type="submit" disabled={loading}>
+                  <Button
+                    className="btn-custom-orange"
+                    variant="primary"
+                    type="submit"
+                    disabled={loading}
+                  >
                     {loading ? (
                       <>
                         <Spinner
@@ -83,7 +97,9 @@ export function ForgotPasswordPage() {
                 </div>
               </Form>
               <div className="mt-3 text-center">
-                <Link className="link-custom-orange" to="/login">Voltar para o login.</Link>
+                <Link className="link-custom-orange" to="/login">
+                  Voltar para o login.
+                </Link>
               </div>
             </Card.Body>
           </Card>

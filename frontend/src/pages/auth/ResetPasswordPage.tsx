@@ -1,6 +1,15 @@
-import React, { useState } from "react";
-import { Container, Form, Button, Alert, Card, Spinner, Row, Col } from "react-bootstrap";
 import axios from "axios";
+import { useState, type FormEvent } from "react";
+import {
+  Container,
+  Form,
+  Button,
+  Alert,
+  Card,
+  Spinner,
+  Row,
+  Col,
+} from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 
 const API_URL = "/api/auth";
@@ -16,7 +25,7 @@ export function ResetPasswordPage() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     if (password !== confirmPassword) {
@@ -89,7 +98,12 @@ export function ResetPasswordPage() {
                 </Form.Group>
 
                 <div className="d-grid">
-                  <Button className="btn-custom-orange" variant="primary" type="submit" disabled={loading}>
+                  <Button
+                    className="btn-custom-orange"
+                    variant="primary"
+                    type="submit"
+                    disabled={loading}
+                  >
                     {loading ? (
                       <>
                         <Spinner
